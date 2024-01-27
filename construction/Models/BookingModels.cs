@@ -6,7 +6,7 @@ namespace construction.Models;
 [Table("booking_requests")]
 public class BookingRequest
 {
-    [Column("id")]
+    [Column("booking_id")]
     public int Id { get; set; }
 
     [Column("date")]

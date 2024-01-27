@@ -11,7 +11,8 @@ public class MyContext : DbContext
 
     public DbSet<BookingRequest> BookingRequests { get; set; } = null!;
     public DbSet<JobTypes> JobTypes { get; set; } = null!;
-    public DbSet<Portfolio> Portfolios { get; set; } = null!;
+    public DbSet<Jobs> Jobs { get; set; } = null!;
     public DbSet<Admin> Admins { get; set; } = null!;
+    public DbSet<JobsImages> JobsImages { get; set; } = null!;
 }
 
