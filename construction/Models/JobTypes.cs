@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace construction.Models;
 
+[Table("job_types")]
 public class JobTypes
 {
     [Column("name")]

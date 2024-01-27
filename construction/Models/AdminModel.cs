@@ -5,7 +5,7 @@ namespace construction.Models;
 [Table("admin")]
 public class Admin
 {
-    [Column("id")]
+    [Column("admin_id")]
     public int Id { get; set; }
     [Column("name")]
     public string Name { get; set; }

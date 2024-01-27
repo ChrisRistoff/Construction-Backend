@@ -3,10 +3,10 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace construction.Models;
 
-[Table("portfolio")]
-public class Portfolio
+[Table("jobs")]
+public class Jobs
 {
-    [Column("id")]
+    [Column("job_id")]
     public int Id { get; set; }
 
     [Column("title")]
@@ -21,17 +21,13 @@ public class Portfolio
     [NotNull]
     public string? Description { get; set; }
 
-    [Column("image")]
-    [NotNull]
-    public string? Image { get; set; }
-
     [Column("job_type")]
     [NotNull]
     public string? JobType { get; set; }
 
     [Column("date")]
     [NotNull]
-    public DateTime Date { get; set; }
+    public DateTime? Date { get; set; }
 
     [Column("client")]
     [NotNull]
@@ -41,6 +37,7 @@ public class Portfolio
     [NotNull]
     public string? Location { get; set; }
 
+    // job_type is a foreign key to JobTypes
     [ForeignKey("JobType")]
     public JobTypes? Name { get; set; }
 }
