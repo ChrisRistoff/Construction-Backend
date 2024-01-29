@@ -16,8 +16,6 @@ public class TestAuth
             JsonConvert.SerializeObject(new LoginRequestDto { Name = "test", Password = "test" }),
             Encoding.UTF8, "application/json"));
 
-        Console.WriteLine(loginResponse.Content);
-
         Assert.Equal(HttpStatusCode.OK, loginResponse.StatusCode);
 
         var loginResponseString = await loginResponse.Content.ReadAsStringAsync();
@@ -49,6 +47,7 @@ public class TestAuth
             Encoding.UTF8, "application/json"));
 
         Assert.Equal(HttpStatusCode.BadRequest, loginResponse.StatusCode);
+        Assert.Equal("Username or password is incorrect", await loginResponse.Content.ReadAsStringAsync());
     }
 
     [Fact]
@@ -59,5 +58,6 @@ public class TestAuth
             Encoding.UTF8, "application/json"));
 
         Assert.Equal(HttpStatusCode.BadRequest, loginResponse.StatusCode);
+        Assert.Equal("Username or password is incorrect", await loginResponse.Content.ReadAsStringAsync());
     }
 }
