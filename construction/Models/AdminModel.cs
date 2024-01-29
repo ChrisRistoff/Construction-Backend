@@ -7,10 +7,13 @@ public class Admin
 {
     [Column("admin_id")]
     public int Id { get; set; }
+
     [Column("name")]
     public string Name { get; set; }
-    [Column("email")]
+
+    [Column("password")]
     public string Password { get; set; }
+
     [Column("role")]
     public string Role { get; set; }
 }

@@ -27,7 +27,7 @@ public class AdminController(AdminRepository adminRepository, AuthService authSe
 
             LoginResponseDto loginResponse = await adminRepository.LoginAdmin(loginAdmin);
 
-            if (loginResponse.Name == null)
+            if (loginResponse == null)
             {
                 return BadRequest("Username or password is incorrect");
             }

@@ -34,7 +34,7 @@ public class AdminRepository : IAdminRepository
         }
     }
 
-    public async Task<LoginResponseDto> LoginAdmin(LoginRequestDto user)
+    public async Task<LoginResponseDto?> LoginAdmin(LoginRequestDto user)
     {
         await using var connection = new NpgsqlConnection(_connectionString);
 
@@ -42,15 +42,16 @@ public class AdminRepository : IAdminRepository
         // get admin
         var admin = await GetUser(user.Name);
 
+        // check if admin exists
+        if (admin == null)
+        {
+            return null;
+        }
+
         // check password
         if (!_authService.CheckPassword(user.Password, admin.Password))
         {
-            return new LoginResponseDto
-            {
-                Name = null,
-                Role = null,
-                Token = null,
-            };
+            return null;
         }
 
         string token = _authService.GenerateJwtToken(admin);
@@ -58,8 +59,8 @@ public class AdminRepository : IAdminRepository
         // return user
         return new LoginResponseDto
         {
-            Name = user.Name,
-            Role = user.Role,
+            Name = admin.Name,
+            Role = admin.Role,
             Token = token,
         };
     }
@@ -72,7 +73,7 @@ public class AdminRepository : IAdminRepository
         var sql = @"
             SELECT *
             FROM admin
-            WHERE username = @Username
+            WHERE name = @Username
         ";
 
         var result = await connection.QueryAsync<Admin>(sql, new {Username = username});
