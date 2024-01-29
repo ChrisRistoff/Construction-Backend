@@ -6,7 +6,7 @@ using construction.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
-namespace portfolio.Services;
+namespace construction.Services;
 
 public class AuthService(IConfiguration configuration) : IAuthService
 {

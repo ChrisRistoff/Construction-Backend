@@ -2,10 +2,10 @@ using Dapper;
 using Npgsql;
 using construction.Dtos;
 using construction.Models;
-using portfolio.Interfaces;
-using portfolio.Services;
+using construction.Interfaces;
+using construction.Services;
 
-namespace portfolio.Repositories;
+namespace construction.Repositories;
 
 public class AdminRepository : IAdminRepository
 {
@@ -40,14 +40,14 @@ public class AdminRepository : IAdminRepository
 
 
         // get admin
-        var admin = await GetUser(user.Username);
+        var admin = await GetUser(user.Name);
 
         // check password
         if (!_authService.CheckPassword(user.Password, admin.Password))
         {
             return new LoginResponseDto
             {
-                Username = null,
+                Name = null,
                 Role = null,
                 Token = null,
             };
@@ -58,7 +58,7 @@ public class AdminRepository : IAdminRepository
         // return user
         return new LoginResponseDto
         {
-            Username = user.Username,
+            Name = user.Name,
             Role = user.Role,
             Token = token,
         };

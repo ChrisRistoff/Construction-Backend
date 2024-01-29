@@ -1,7 +1,6 @@
 using construction.Dtos;
-using construction.Models;
 
-namespace portfolio.Interfaces;
+namespace construction.Interfaces;
 
 public interface IAdminRepository
 {
