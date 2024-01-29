@@ -55,11 +55,5 @@ jobs:
       - name: Set up JWT Audience
         run: echo "JWT__Audience=construction" >> $GITHUB_ENV
 
-      - name: Install Entity Framework Core tools and Migrate DB
-        run: dotnet tool install --global dotnet-ef
-        
       - name: Test
         run: dotnet test
-        env:
-          ASPNETCORE_ENVIRONMENT: Testing
-          ConnectionStrings__TestConnection: ${{ env.ConnectionStrings__TestConnection }}
