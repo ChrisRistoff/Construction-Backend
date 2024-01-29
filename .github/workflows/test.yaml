@@ -55,8 +55,8 @@ jobs:
       - name: Set up JWT Audience
         run: echo "JWT__Audience=construction" >> $GITHUB_ENV
         
-      - name: Migrate DB
-        run: dotnet ef database update
+      - name: Install Entity Framework Core tools and Migrate DB
+        run: dotnet tool install --global dotnet-ef && dotnet ef database update
 
       - name: Test
         run: dotnet test
