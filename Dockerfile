@@ -4,8 +4,8 @@ WORKDIR /app
 COPY ["construction/construction.csproj", "construction/"]
 RUN dotnet restore "construction/construction.csproj"
 
-COPY portfolio/ ./portfolio/
-WORKDIR /app/portfolio
+COPY construction/ ./construction/
+WORKDIR /app/construction
 RUN dotnet publish "construction.csproj" -c Release -o out
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
