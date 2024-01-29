@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace construction.Data;
 
-public class MyContextFactory : IDesignTimeDbContextFactory<MyContext>
+public class MyContextFactory(IConfiguration configuration) : IDesignTimeDbContextFactory<MyContext>
 {
     public MyContext CreateDbContext(string[] args)
     {
@@ -25,10 +25,7 @@ public class MyContextFactory : IDesignTimeDbContextFactory<MyContext>
             connectionStringName = "ProductionConnection";
         }
 
-        IConfigurationRoot configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .Build();
-
+        // manually inserted configuration instead of building it in this class
         var optionsBuilder = new DbContextOptionsBuilder<MyContext>();
         optionsBuilder.UseNpgsql(configuration.GetConnectionString(connectionStringName));
 

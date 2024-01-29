@@ -1,13 +1,10 @@
 using System.Text;
 using construction.Data;
-using construction.Interfaces;
 using construction.Repositories;
 using construction.Seed;
 using construction.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -105,7 +102,7 @@ if (env == "Development" || env == "Testing")
 {
     try
     {
-        var context = new MyContextFactory().CreateDbContext(args);
+        var context = new MyContextFactory(builder.Configuration).CreateDbContext(args);
         context.Database.Migrate();
 
         await SeedAdmin.Seed(builder.Configuration.GetConnectionString(connectionStringName), builder.Configuration);
