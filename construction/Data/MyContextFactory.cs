@@ -25,6 +25,7 @@ public class MyContextFactory(IConfiguration configuration) : IDesignTimeDbConte
             connectionStringName = "ProductionConnection";
         }
 
+        // manually inserted configuration instead of building it in this class
         var optionsBuilder = new DbContextOptionsBuilder<MyContext>();
         optionsBuilder.UseNpgsql(configuration.GetConnectionString(connectionStringName));
 
