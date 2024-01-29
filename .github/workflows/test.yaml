@@ -54,7 +54,10 @@ jobs:
 
       - name: Set up JWT Audience
         run: echo "JWT__Audience=construction" >> $GITHUB_ENV
-        
+
+      - name: Set Testing Connection String
+        run: echo "ConnectionStrings__DefaultConnection=Host=localhost;Port=5433;Database=test_db;Username=test_user;Password=password" >> $GITHUB_ENV
+ 
       - name: Install Entity Framework Core tools and Migrate DB
         run: dotnet tool install --global dotnet-ef && dotnet ef database update
         working-directory: ./construction
