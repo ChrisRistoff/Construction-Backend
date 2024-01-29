@@ -23,7 +23,6 @@ public class TestAuth
         LoginResponseDto? user = JsonConvert.DeserializeObject<LoginResponseDto>(loginResponseString);
 
         _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user!.Token);
-
         var response = await _client.GetAsync("/api/test-auth");
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
