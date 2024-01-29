@@ -12,8 +12,8 @@ using construction.Data;
 namespace construction.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20240129131216_migrate")]
-    partial class migrate
+    [Migration("20240129142231_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

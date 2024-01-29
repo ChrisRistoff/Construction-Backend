@@ -6,6 +6,8 @@ using construction.Seed;
 using construction.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -99,9 +101,19 @@ builder.Services.AddScoped<AdminRepository>();
 // services
 builder.Services.AddTransient<AuthService>();
 
-if (env == "Development" || env == "Production")
+if (env == "Development" || env == "Testing")
 {
-    await SeedAdmin.Seed(builder.Configuration.GetConnectionString(connectionStringName), builder.Configuration);
+    try
+    {
+        var context = new MyContextFactory().CreateDbContext(args);
+        context.Database.Migrate();
+
+        await SeedAdmin.Seed(builder.Configuration.GetConnectionString(connectionStringName), builder.Configuration);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("An error occurred during migration or seeding: " + ex.Message);
+    }
 }
 
 var app = builder.Build();
@@ -121,3 +133,5 @@ app.MapControllers();
 app.UseHttpsRedirection();
 
 app.Run();
+
+public partial class Program { }

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace portfolio.Controllers;
 
 [ApiController]
-public class AdminController(AdminRepository adminRepository, AuthService authService) : ControllerBase
+public class AdminController(AdminRepository adminRepository) : ControllerBase
 {
 
     [HttpPost("api/login-admin")]
@@ -25,9 +25,9 @@ public class AdminController(AdminRepository adminRepository, AuthService authSe
                 return BadRequest("Password is required");
             }
 
-            LoginResponseDto loginResponse = await adminRepository.LoginAdmin(loginAdmin);
+            LoginResponseDto loginResponse = await adminRepository.LoginAdmin(loginAdmin)!;
 
-            if (loginResponse == null)
+            if (loginResponse == null!)
             {
                 return BadRequest("Username or password is incorrect");
             }

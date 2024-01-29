@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace construction.Models;
 
@@ -9,11 +10,14 @@ public class Admin
     public int Id { get; set; }
 
     [Column("name")]
-    public string Name { get; set; }
+    [NotNull]
+    public string? Name { get; set; }
 
     [Column("password")]
-    public string Password { get; set; }
+    [NotNull]
+    public string? Password { get; set; }
 
     [Column("role")]
-    public string Role { get; set; }
+    [NotNull]
+    public string? Role { get; set; }
 }
