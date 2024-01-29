@@ -57,6 +57,7 @@ jobs:
         
       - name: Install Entity Framework Core tools and Migrate DB
         run: dotnet tool install --global dotnet-ef && dotnet ef database update
+        working-directory: ./construction
 
       - name: Test
         run: dotnet test
