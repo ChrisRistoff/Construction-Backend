@@ -15,4 +15,3 @@ public class MyContext : DbContext
     public DbSet<Admin> Admins { get; set; } = null!;
     public DbSet<JobsImages> JobsImages { get; set; } = null!;
 }
-

@@ -12,8 +12,8 @@ using construction.Data;
 namespace construction.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20240124222109_AddRestOfTheTables")]
-    partial class AddRestOfTheTables
+    [Migration("20240129142231_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,14 +30,9 @@ namespace construction.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnName("admin_id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("email");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -64,7 +59,7 @@ namespace construction.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnName("booking_id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
@@ -118,15 +113,15 @@ namespace construction.Migrations
 
                     b.HasKey("Name");
 
-                    b.ToTable("JobTypes");
+                    b.ToTable("job_types");
                 });
 
-            modelBuilder.Entity("construction.Models.Portfolio", b =>
+            modelBuilder.Entity("construction.Models.Jobs", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnName("job_id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
@@ -135,7 +130,7 @@ namespace construction.Migrations
                         .HasColumnType("text")
                         .HasColumnName("client");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime?>("Date")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("date");
 
@@ -143,11 +138,6 @@ namespace construction.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("description");
-
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("image");
 
                     b.Property<string>("JobType")
                         .IsRequired()
@@ -173,10 +163,41 @@ namespace construction.Migrations
 
                     b.HasIndex("JobType");
 
-                    b.ToTable("portfolio");
+                    b.ToTable("jobs");
                 });
 
-            modelBuilder.Entity("construction.Models.Portfolio", b =>
+            modelBuilder.Entity("construction.Models.JobsImages", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("image_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Image")
+                        .HasColumnType("text")
+                        .HasColumnName("image");
+
+                    b.Property<int>("JobId")
+                        .HasColumnType("integer")
+                        .HasColumnName("job_id");
+
+                    b.Property<int?>("job_id")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("job_id");
+
+                    b.ToTable("jobs_images", t =>
+                        {
+                            t.Property("job_id")
+                                .HasColumnName("job_id1");
+                        });
+                });
+
+            modelBuilder.Entity("construction.Models.Jobs", b =>
                 {
                     b.HasOne("construction.Models.JobTypes", "Name")
                         .WithMany()
@@ -185,6 +206,15 @@ namespace construction.Migrations
                         .IsRequired();
 
                     b.Navigation("Name");
+                });
+
+            modelBuilder.Entity("construction.Models.JobsImages", b =>
+                {
+                    b.HasOne("construction.Models.Jobs", "Job")
+                        .WithMany()
+                        .HasForeignKey("job_id");
+
+                    b.Navigation("Job");
                 });
 #pragma warning restore 612, 618
         }

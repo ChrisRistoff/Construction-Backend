@@ -9,7 +9,7 @@ public class BussinessInfo
     public int Id { get; set; }
 
     [Column("name")]
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     [Column("email")]
     public string? Email { get; set; }
