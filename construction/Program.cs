@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using portfolio.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,7 +43,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo{Title = "Portfolio", Version = "v1"});
+    c.SwaggerDoc("v1", new OpenApiInfo{Title = "Construction", Version = "v1"});
 
     // add JWT Authentication
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -70,7 +71,6 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 // connection strings
-
 builder.Services.AddControllers();
 
 string? env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
@@ -94,16 +94,26 @@ if (env == "Production")
 
 // repositories
 builder.Services.AddScoped<AdminRepository>();
+builder.Services.AddScoped<BusinessInfoRepository>();
 
 // services
 builder.Services.AddTransient<AuthService>();
+
+builder.Services.AddDbContext<MyContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString(connectionStringName)));
+
+
+var app = builder.Build();
 
 if (env == "Development" || env == "Testing")
 {
     try
     {
-        var context = new MyContextFactory(builder.Configuration).CreateDbContext(args);
-        context.Database.Migrate();
+        using (var scope = app.Services.CreateScope())
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<MyContext>();
+            dbContext.Database.Migrate();
+        }
 
         await SeedAdmin.Seed(builder.Configuration.GetConnectionString(connectionStringName), builder.Configuration);
     }
@@ -112,8 +122,6 @@ if (env == "Development" || env == "Testing")
         Console.WriteLine("An error occurred during migration or seeding: " + ex.Message);
     }
 }
-
-var app = builder.Build();
 
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {

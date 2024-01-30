@@ -12,7 +12,7 @@ using construction.Data;
 namespace construction.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20240129142231_InitialMigration")]
+    [Migration("20240130145813_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -88,6 +88,75 @@ namespace construction.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("booking_requests");
+                });
+
+            modelBuilder.Entity("construction.Models.BusinessInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("info_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("address");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("city");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("email");
+
+                    b.Property<string>("Facebook")
+                        .HasColumnType("text")
+                        .HasColumnName("facebook");
+
+                    b.Property<string>("Info")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("info");
+
+                    b.Property<string>("Instagram")
+                        .HasColumnType("text")
+                        .HasColumnName("instagram");
+
+                    b.Property<string>("Linkedin")
+                        .HasColumnType("text")
+                        .HasColumnName("linkedin");
+
+                    b.Property<string>("Logo")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("logo");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("phone");
+
+                    b.Property<string>("Tiktok")
+                        .HasColumnType("text")
+                        .HasColumnName("tiktok");
+
+                    b.Property<string>("Youtube")
+                        .HasColumnType("text")
+                        .HasColumnName("youtube");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("business_info");
                 });
 
             modelBuilder.Entity("construction.Models.JobTypes", b =>

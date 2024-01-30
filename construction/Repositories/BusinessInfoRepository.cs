@@ -5,11 +5,11 @@ using construction.Dtos;
 
 namespace portfolio.Repositories;
 
-public class PersonalInfoRepository
+public class BusinessInfoRepository
 {
     private readonly string? _connectionString;
 
-    public PersonalInfoRepository(IConfiguration config)
+    public BusinessInfoRepository(IConfiguration config)
     {
         string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
 
@@ -29,9 +29,9 @@ public class PersonalInfoRepository
         }
     }
 
-    public async Task<GetBussinessInfoDto?> GetPersonalInfo()
+    public async Task<GetBussinessInfoDto?> GetBusinessInfo()
     {
         using var connection = new NpgsqlConnection(_connectionString);
-        return await connection.QueryFirstOrDefaultAsync<GetBussinessInfoDto>("SELECT * FROM personal_info WHERE id = 1");
+        return await connection.QueryFirstOrDefaultAsync<GetBussinessInfoDto>("SELECT * FROM business_info WHERE info_id = 1");
     }
 }
