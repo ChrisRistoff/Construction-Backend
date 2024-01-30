@@ -45,6 +45,30 @@ namespace construction.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "business_info",
+                columns: table => new
+                {
+                    info_id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    email = table.Column<string>(type: "text", nullable: false),
+                    phone = table.Column<string>(type: "text", nullable: false),
+                    address = table.Column<string>(type: "text", nullable: false),
+                    city = table.Column<string>(type: "text", nullable: false),
+                    info = table.Column<string>(type: "text", nullable: false),
+                    logo = table.Column<string>(type: "text", nullable: false),
+                    facebook = table.Column<string>(type: "text", nullable: true),
+                    instagram = table.Column<string>(type: "text", nullable: true),
+                    youtube = table.Column<string>(type: "text", nullable: true),
+                    tiktok = table.Column<string>(type: "text", nullable: true),
+                    linkedin = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_business_info", x => x.info_id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "job_types",
                 columns: table => new
                 {
@@ -122,6 +146,9 @@ namespace construction.Migrations
 
             migrationBuilder.DropTable(
                 name: "booking_requests");
+
+            migrationBuilder.DropTable(
+                name: "business_info");
 
             migrationBuilder.DropTable(
                 name: "jobs_images");

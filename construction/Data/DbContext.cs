@@ -9,6 +9,7 @@ public class MyContext : DbContext
     {
     }
 
+    public DbSet<BusinessInfo> BusinessInfo { get; set; } = null!;
     public DbSet<BookingRequest> BookingRequests { get; set; } = null!;
     public DbSet<JobTypes> JobTypes { get; set; } = null!;
     public DbSet<Jobs> Jobs { get; set; } = null!;

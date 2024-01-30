@@ -1,3 +1,4 @@
+/*
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
@@ -5,9 +6,10 @@ namespace construction.Data;
 
 public class MyContextFactory(IConfiguration configuration) : IDesignTimeDbContextFactory<MyContext>
 {
+
     public MyContext CreateDbContext(string[] args)
     {
-        var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
+        string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
 
         string connectionStringName = "";
         if (env == "Testing")
@@ -32,3 +34,4 @@ public class MyContextFactory(IConfiguration configuration) : IDesignTimeDbConte
         return new MyContext(optionsBuilder.Options);
     }
 }
+*/
