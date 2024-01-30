@@ -12,7 +12,7 @@ public class TestAuth
     [Fact]
     public async Task TestProtectedEndpoint()
     {
-        var loginResponse = await _client.PostAsync("/api/login-admin", new StringContent(
+        var loginResponse = await _client.PostAsync("/construction/api/login-admin", new StringContent(
             JsonConvert.SerializeObject(new LoginRequestDto { Name = "test", Password = "test" }),
             Encoding.UTF8, "application/json"));
 
@@ -23,7 +23,7 @@ public class TestAuth
         LoginResponseDto? user = JsonConvert.DeserializeObject<LoginResponseDto>(loginResponseString);
 
         _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user!.Token);
-        var response = await _client.GetAsync("/api/test-auth");
+        var response = await _client.GetAsync("construction/api/test-auth");
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
@@ -33,7 +33,7 @@ public class TestAuth
     {
         _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "invalid-token");
 
-        var response = await _client.GetAsync("/api/test-auth");
+        var response = await _client.GetAsync("construction/api/test-auth");
 
         Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
     }
@@ -41,7 +41,7 @@ public class TestAuth
     [Fact]
     public async Task LoginWithWrongPassword()
     {
-        var loginResponse = await _client.PostAsync("/api/login-admin", new StringContent(
+        var loginResponse = await _client.PostAsync("construction/api/login-admin", new StringContent(
             JsonConvert.SerializeObject(new LoginRequestDto { Name = "test", Password = "wrong-password" }),
             Encoding.UTF8, "application/json"));
 
@@ -52,7 +52,7 @@ public class TestAuth
     [Fact]
     public async Task LoginWithWrongUsername()
     {
-        var loginResponse = await _client.PostAsync("/api/login-admin", new StringContent(
+        var loginResponse = await _client.PostAsync("construction/api/login-admin", new StringContent(
             JsonConvert.SerializeObject(new LoginRequestDto { Name = "wrong-username", Password = "test" }),
             Encoding.UTF8, "application/json"));
 
