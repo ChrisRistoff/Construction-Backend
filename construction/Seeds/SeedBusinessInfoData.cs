@@ -9,7 +9,7 @@ public class SeedBusinessInfo
 {
     public static async Task Seed(string? connectionString, IConfiguration configuration)
     {
-        GetBussinessInfoDto businessData = new BusinessInfoData().GetBusinessInfoData();
+        GetBusinessInfoDto businessData = new BusinessInfoData().GetBusinessInfoData();
 
         await using var connection = new NpgsqlConnection(connectionString);
 

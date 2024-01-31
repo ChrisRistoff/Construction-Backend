@@ -16,7 +16,7 @@ public class GetBusinessInfoTests
 
         var responseString = await response.Content.ReadAsStringAsync();
 
-        GetBussinessInfoDto? businessInfo = JsonConvert.DeserializeObject<GetBussinessInfoDto>(responseString);
+        GetBusinessInfoDto? businessInfo = JsonConvert.DeserializeObject<GetBusinessInfoDto>(responseString);
 
         Assert.Equal("test", businessInfo!.Name);
         Assert.Equal("test", businessInfo!.Email);

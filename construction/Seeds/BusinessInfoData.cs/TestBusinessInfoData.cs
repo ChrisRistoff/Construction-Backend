@@ -4,9 +4,9 @@ namespace construction.Seed;
 
 public class BusinessInfoData
 {
-    public GetBussinessInfoDto GetBusinessInfoData()
+    public GetBusinessInfoDto GetBusinessInfoData()
     {
-        return new GetBussinessInfoDto
+        return new GetBusinessInfoDto
         {
             Info_id = 1,
             Name = "test",
