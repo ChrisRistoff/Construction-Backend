@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using construction.Dtos;
 using construction.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace construction.Controllers;
 
@@ -22,6 +23,7 @@ public class PersonalInfoController(BusinessInfoRepository businessInfoRepositor
     }
 
     [HttpPatch("construction/api/info")]
+    [Authorize]
     public async Task<ActionResult<UpdateBusinessInfoDto>> UpdatePersonalInfo(UpdateBusinessInfoDto businessInfo)
     {
         try

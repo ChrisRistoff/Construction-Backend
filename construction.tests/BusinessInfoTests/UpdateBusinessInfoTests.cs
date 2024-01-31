@@ -1,4 +1,5 @@
 using System.Net;
+using System.Net.Http.Headers;
 using System.Text;
 using construction.Dtos;
 using Newtonsoft.Json;
@@ -11,6 +12,18 @@ public class UpdateBusinessInfoTests
     {
         var client = SharedTestResources.Factory.CreateClient();
 
+        // login
+        var loginResponse = await client.PostAsync("/construction/api/login-admin", new StringContent(
+            JsonConvert.SerializeObject(new LoginRequestDto { Name = "test", Password = "test" }),
+            Encoding.UTF8, "application/json"));
+
+        Assert.Equal(HttpStatusCode.OK, loginResponse.StatusCode);
+
+        var loginResponseString = await loginResponse.Content.ReadAsStringAsync();
+        LoginResponseDto? user = JsonConvert.DeserializeObject<LoginResponseDto>(loginResponseString);
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user!.Token);
+
+        // check current business info
         var response = await client.GetAsync("/construction/api/info");
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -32,6 +45,7 @@ public class UpdateBusinessInfoTests
         Assert.Equal("test", businessInfo!.Tiktok);
         Assert.Equal("test", businessInfo!.Linkedin);
 
+        // update business info and check if it was updated
         var updateBusinessInfoDto = new UpdateBusinessInfoDto
         {
             Name = "test2",
