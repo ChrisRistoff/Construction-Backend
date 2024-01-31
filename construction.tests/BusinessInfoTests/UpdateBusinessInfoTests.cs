@@ -80,4 +80,56 @@ public class UpdateBusinessInfoTests
         Assert.Equal("test2", updatedBusinessInfo!.Tiktok);
         Assert.Equal("test2", updatedBusinessInfo!.Linkedin);
     }
+
+    [Fact]
+    public async Task UpdateBusinessInfoWithInvalidToken()
+    {
+        var client = SharedTestResources.Factory.CreateClient();
+
+        var updateBusinessInfoDto = new UpdateBusinessInfoDto
+        {
+            Name = "test2",
+            Email = "test2",
+            Phone = "test2",
+            Address = "test2",
+            City = "test2",
+            Info = "test2",
+            Facebook = "test2",
+            Instagram = "test2",
+            Youtube = "test2",
+            Tiktok = "test2",
+            Linkedin = "test2"
+        };
+
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "invalid-token");
+
+        var updateResponse = await client.PatchAsync("/construction/api/info", new StringContent(JsonConvert.SerializeObject(updateBusinessInfoDto), Encoding.UTF8, "application/json"));
+
+        Assert.Equal(HttpStatusCode.Unauthorized, updateResponse.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateBusinessInfoNoToken()
+    {
+        var client = SharedTestResources.Factory.CreateClient();
+
+        var updateBusinessInfoDto = new UpdateBusinessInfoDto
+        {
+            Name = "test2",
+            Email = "test2",
+            Phone = "test2",
+            Address = "test2",
+            City = "test2",
+            Info = "test2",
+            Facebook = "test2",
+            Instagram = "test2",
+            Youtube = "test2",
+            Tiktok = "test2",
+            Linkedin = "test2"
+        };
+
+        var updateResponse = await client.PatchAsync("/construction/api/info", new StringContent(JsonConvert.SerializeObject(updateBusinessInfoDto), Encoding.UTF8, "application/json"));
+
+        Assert.Equal(HttpStatusCode.Unauthorized, updateResponse.StatusCode);
+    }
 }
