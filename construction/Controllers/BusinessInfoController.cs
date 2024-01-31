@@ -8,7 +8,7 @@ namespace portfolio.Controllers;
 public class PersonalInfoController(BusinessInfoRepository businessInfoRepository) : ControllerBase
 {
     [HttpGet("construction/api/info")]
-    public async Task<ActionResult<GetBussinessInfoDto>> GetPersonalInfo()
+    public async Task<ActionResult<GetBusinessInfoDto>> GetPersonalInfo()
     {
         var personalInfo = await businessInfoRepository.GetBusinessInfo();
         return Ok(personalInfo);
