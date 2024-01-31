@@ -5,5 +5,5 @@ namespace construction.Interfaces;
 public interface IBusinessInfoRepository
 {
     Task<GetBusinessInfoDto?> GetBusinessInfo();
-    Task<GetBusinessInfoDto?> UpdateBusinessInfo(UpdateBusinessInfoDto businessInfo);
+    Task<UpdateBusinessInfoDto?> UpdateBusinessInfo(UpdateBusinessInfoDto businessInfo);
 }

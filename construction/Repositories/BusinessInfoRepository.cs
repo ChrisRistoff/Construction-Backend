@@ -3,7 +3,7 @@ using Npgsql;
 using construction.Interfaces;
 using construction.Dtos;
 
-namespace portfolio.Repositories;
+namespace construction.Repositories;
 
 public class BusinessInfoRepository : IBusinessInfoRepository
 {
@@ -35,13 +35,13 @@ public class BusinessInfoRepository : IBusinessInfoRepository
         return await connection.QueryFirstOrDefaultAsync<GetBusinessInfoDto>("SELECT * FROM business_info WHERE info_id = 1");
     }
 
-    public Task<GetBusinessInfoDto?> UpdateBusinessInfo(UpdateBusinessInfoDto businessInfo)
+    public async Task<UpdateBusinessInfoDto?> UpdateBusinessInfo(UpdateBusinessInfoDto businessInfo)
     {
         using var connection = new NpgsqlConnection(_connectionString);
 
         DynamicParameters parameters = new(businessInfo);
 
-        return connection.QueryFirstOrDefaultAsync<GetBusinessInfoDto>(@"
+        return await connection.QueryFirstOrDefaultAsync<UpdateBusinessInfoDto>(@"
             UPDATE business_info
             SET name = @Name,
                 email = @Email,
