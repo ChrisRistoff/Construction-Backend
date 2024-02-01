@@ -5,7 +5,7 @@ using construction.Dtos;
 
 namespace construction.Repositories;
 
-public class JobTypesRepository
+public class JobTypesRepository : IJobTypesRepository
 {
     private readonly string? _connectionString;
 
@@ -29,7 +29,7 @@ public class JobTypesRepository
         }
     }
 
-    public async Task<IEnumerable<GetJobTypesDto>> GetJobTypes()
+    public async Task<IEnumerable<GetJobTypesDto>?> GetJobTypes()
     {
         using var connection = new NpgsqlConnection(_connectionString);
         return await connection.QueryAsync<GetJobTypesDto>("SELECT * FROM job_types");
