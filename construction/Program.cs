@@ -94,6 +94,7 @@ if (env == "Production")
 // repositories
 builder.Services.AddScoped<AdminRepository>();
 builder.Services.AddScoped<BusinessInfoRepository>();
+builder.Services.AddScoped<JobTypesRepository>();
 
 // services
 builder.Services.AddTransient<AuthService>();
@@ -116,6 +117,7 @@ if (env == "Development" || env == "Testing")
 
         await SeedAdmin.Seed(builder.Configuration.GetConnectionString(connectionStringName), builder.Configuration);
         await SeedBusinessInfo.Seed(builder.Configuration.GetConnectionString(connectionStringName), builder.Configuration);
+        await SeedJobTypes.Seed(builder.Configuration.GetConnectionString(connectionStringName), builder.Configuration);
     }
     catch (Exception ex)
     {
