@@ -21,4 +21,24 @@ public class JobTypesController(JobTypesRepository jobTypesRepository) : Control
             return BadRequest(e.Message);
         }
     }
+
+    [HttpGet("construction/api/jobtypes/{id}")]
+    public async Task<ActionResult<GetJobTypeDto>> GetJobType(int id)
+    {
+        try
+        {
+            var jobType = await jobTypesRepository.GetJobType(id);
+
+            if (jobType == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(jobType);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }
