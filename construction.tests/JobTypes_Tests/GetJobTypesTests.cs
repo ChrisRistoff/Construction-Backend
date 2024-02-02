@@ -33,4 +33,34 @@ public class GetJobTypesTests
         Assert.Equal("test3", jobTypes![2].Image);
         Assert.Equal("test3", jobTypes![2].Icon);
     }
+
+    [Fact]
+    public async Task GetJobTypeByName()
+    {
+        var client = SharedTestResources.Factory.CreateClient();
+
+        var response = await client.GetAsync("/construction/api/jobtypes/test");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        var responseString = await response.Content.ReadAsStringAsync();
+
+        GetJobTypeDto? jobType = JsonConvert.DeserializeObject<GetJobTypeDto>(responseString);
+
+        Assert.Equal("test", jobType!.Name);
+        Assert.Equal("test", jobType!.Description);
+        Assert.Equal("test", jobType!.Image);
+        Assert.Equal("test", jobType!.Icon);
+    }
+
+    [Fact]
+    public async Task GetJobTypeByName_NotFound()
+    {
+        var client = SharedTestResources.Factory.CreateClient();
+
+        var response = await client.GetAsync("/construction/api/jobtypes/asfas");
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
 }

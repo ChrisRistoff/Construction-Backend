@@ -22,12 +22,12 @@ public class JobTypesController(JobTypesRepository jobTypesRepository) : Control
         }
     }
 
-    [HttpGet("construction/api/jobtypes/{id}")]
-    public async Task<ActionResult<GetJobTypeDto>> GetJobType(int id)
+    [HttpGet("construction/api/jobtypes/{name}")]
+    public async Task<ActionResult<GetJobTypeDto>> GetJobType(string name)
     {
         try
         {
-            var jobType = await jobTypesRepository.GetJobType(id);
+            var jobType = await jobTypesRepository.GetJobType(name);
 
             if (jobType == null)
             {
