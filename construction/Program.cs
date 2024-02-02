@@ -91,6 +91,15 @@ if (env == "Production")
     connectionStringName = "ProductionConnection";
 }
 
+if (env == "DockerTest")
+{
+    connectionStringName = "DockerTestConnection";
+}
+
+builder.Services.AddDbContext<MyContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString(connectionStringName)));
+
+
 // repositories
 builder.Services.AddScoped<AdminRepository>();
 builder.Services.AddScoped<BusinessInfoRepository>();
@@ -99,13 +108,10 @@ builder.Services.AddScoped<JobTypesRepository>();
 // services
 builder.Services.AddTransient<AuthService>();
 
-builder.Services.AddDbContext<MyContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString(connectionStringName)));
-
 
 var app = builder.Build();
 
-if (env == "Development" || env == "Testing")
+if (env == "Development" || env == "Testing" || env == "DockerTest")
 {
     try
     {
