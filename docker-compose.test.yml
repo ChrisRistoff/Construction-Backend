@@ -13,3 +13,7 @@ services:
       dockerfile: Dockerfile.test
     depends_on:
       - test-database
+    environment:
+      - JWT_KEY=${JWT__Key}
+      - JWT_ISSUER=${JWT__Issuer}
+      - JWT_AUDIENCE=${JWT__Audience}
