@@ -13,7 +13,3 @@ services:
       dockerfile: Dockerfile.test
     depends_on:
       - test-database
-    environment:
-      - JWT__Key=TemporarySuperSecretKeyJustForTestingPurposes!11!!1eleven
-      - JWT__Issuer=construction
-      - JWT_Audience=construction
