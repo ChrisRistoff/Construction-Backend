@@ -19,17 +19,5 @@ jobs:
         with:
           dotnet-version: '8.0'
 
-      - name: Set Testing Environment
-        run: echo "ASPNETCORE_ENVIRONMENT=Testing" >> $GITHUB_ENV
-
-      - name: Set up JWT Secret
-        run: echo "Jwt__Key=${{ secrets.JWT_KEY }}" >> $GITHUB_ENV
-
-      - name: Set up JWT Issuer
-        run: echo "JWT__Issuer=construction" >> $GITHUB_ENV
-
-      - name: Set up JWT Audience
-        run: echo "JWT__Audience=construction" >> $GITHUB_ENV
-
       - name: Test
         run: docker-compose -f docker-compose.test.yml up --build --exit-code-from test-app
