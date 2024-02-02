@@ -4,11 +4,11 @@ namespace construction.Seed;
 
 public class JobTypesData
 {
-    public IEnumerable<GetJobTypesDto> GetJobTypesData()
+    public IEnumerable<GetJobTypeDto> GetJobTypesData()
     {
-        return new List<GetJobTypesDto>
+        return new List<GetJobTypeDto>
         {
-            new GetJobTypesDto
+            new GetJobTypeDto
             {
                 Name = "test",
                 Description = "test",
@@ -16,7 +16,7 @@ public class JobTypesData
                 Icon = "test"
             },
 
-            new GetJobTypesDto
+            new GetJobTypeDto
             {
                 Name = "test2",
                 Description = "test2",
@@ -24,7 +24,7 @@ public class JobTypesData
                 Icon = "test2"
             },
 
-            new GetJobTypesDto
+            new GetJobTypeDto
             {
                 Name = "test3",
                 Description = "test3",
