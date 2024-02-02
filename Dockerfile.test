@@ -1,0 +1,23 @@
+# Use the .NET 8 SDK image as the base image
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
+
+WORKDIR /app
+
+# Copy both the main application and test project .csproj files
+COPY ["construction/construction.csproj", "construction/"]
+COPY ["construction.tests/construction.tests.csproj", "construction.tests/"]
+
+# Restore NuGet packages for both projects
+RUN dotnet restore "construction/construction.csproj"
+RUN dotnet restore "construction.tests/construction.tests.csproj"
+
+# Copy the entire solution
+COPY . ./
+
+# set testing connection string
+ENV ConnectionStrings__TestConnection="Server=test-database;Database=construction_test;User Id=test;Password=password;"
+ENV ASPNETCORE_ENVIRONMENT="Testing"
+
+# Run the tests for the test project
+WORKDIR /app/construction.tests
+CMD ["dotnet", "test"]
