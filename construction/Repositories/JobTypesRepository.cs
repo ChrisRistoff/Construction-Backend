@@ -29,9 +29,16 @@ public class JobTypesRepository : IJobTypesRepository
         }
     }
 
-    public async Task<IEnumerable<GetJobTypesDto>?> GetJobTypes()
+    public async Task<IEnumerable<GetJobTypeDto>?> GetJobTypes()
     {
         using var connection = new NpgsqlConnection(_connectionString);
-        return await connection.QueryAsync<GetJobTypesDto>("SELECT * FROM job_types");
+        return await connection.QueryAsync<GetJobTypeDto>("SELECT * FROM job_types");
+    }
+
+    public Task<GetJobTypeDto?> GetJobType(int id)
+    {
+        using var connection = new NpgsqlConnection(_connectionString);
+
+        return connection.QueryFirstOrDefaultAsync<GetJobTypeDto>("SELECT * FROM job_types WHERE job_type_id = @Id", new { Id = id });
     }
 }

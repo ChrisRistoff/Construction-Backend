@@ -1,6 +1,6 @@
 namespace construction.Dtos;
 
-public class GetJobTypesDto
+public class GetJobTypeDto
 {
     public string? Name { get; set; }
     public string? Description { get; set; }

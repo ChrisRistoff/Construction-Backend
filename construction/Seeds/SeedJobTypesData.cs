@@ -9,7 +9,7 @@ public class SeedJobTypes
 {
     public static async Task Seed(string? connectionString, IConfiguration configuration)
     {
-        IEnumerable<GetJobTypesDto> jobTypesData = new JobTypesData().GetJobTypesData();
+        IEnumerable<GetJobTypeDto> jobTypesData = new JobTypesData().GetJobTypesData();
 
         await using var connection = new NpgsqlConnection(connectionString);
 

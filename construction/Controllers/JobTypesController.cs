@@ -9,7 +9,7 @@ namespace construction.Controllers;
 public class JobTypesController(JobTypesRepository jobTypesRepository) : ControllerBase
 {
     [HttpGet("construction/api/jobtypes")]
-    public async Task<ActionResult<IEnumerable<GetJobTypesDto>>> GetJobTypes()
+    public async Task<ActionResult<IEnumerable<GetJobTypeDto>>> GetJobTypes()
     {
         try
         {

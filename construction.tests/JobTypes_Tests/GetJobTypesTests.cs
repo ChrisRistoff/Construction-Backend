@@ -16,7 +16,7 @@ public class GetJobTypesTests
 
         var responseString = await response.Content.ReadAsStringAsync();
 
-        List<GetJobTypesDto>? jobTypes = JsonConvert.DeserializeObject<List<GetJobTypesDto>>(responseString);
+        List<GetJobTypeDto>? jobTypes = JsonConvert.DeserializeObject<List<GetJobTypeDto>>(responseString);
 
         Assert.Equal("test", jobTypes![0].Name);
         Assert.Equal("test", jobTypes![0].Description);
