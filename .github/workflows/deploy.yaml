@@ -13,9 +13,13 @@ jobs:
       - name: Checkout and clone repo
         uses: actions/checkout@v4.1.1
 
-      - name: Decrypt appsettings.json
-        run: openssl aes-256-cbc -d -in construction/appsettings.json.enc -out construction/appsettings.json -k ${{ secrets.ENCRYPTION_KEY }} -pbkdf2 -iter 100000
-
+      - name: Create appsettings.json
+        run: |
+          cat > ${{github.workspace}}/construction/appsettings.json <<EOF
+          ${{ secrets.APPSETTINGS_JSON }}
+          EOF
+        shell: bash
+ 
       - name: Set up SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
