@@ -4,34 +4,51 @@ using System.Text;
 using construction.Dtos;
 using Newtonsoft.Json;
 
+
+
 [Collection("Sequential")]
 public class UpdateBusinessInfoTests
 {
+
+
+
     [Fact]
     public async Task UpdateBusinessInfo()
     {
+
+        // create a client
         var client = SharedTestResources.Factory.CreateClient();
 
-        // login
+        // login user
         var loginResponse = await client.PostAsync("/construction/api/login-admin", new StringContent(
             JsonConvert.SerializeObject(new LoginRequestDto { Name = "test", Password = "test" }),
             Encoding.UTF8, "application/json"));
 
+        // check if the status code is OK
         Assert.Equal(HttpStatusCode.OK, loginResponse.StatusCode);
 
+        // get the response string
         var loginResponseString = await loginResponse.Content.ReadAsStringAsync();
+
+        // deserialize the response string
         LoginResponseDto? user = JsonConvert.DeserializeObject<LoginResponseDto>(loginResponseString);
+
+        // set the token in the client headers
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user!.Token);
 
         // check current business info
         var response = await client.GetAsync("/construction/api/info");
 
+        // check if the status code is OK
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
+        // get the response string
         var responseString = await response.Content.ReadAsStringAsync();
 
+        // deserialize the response string
         GetBusinessInfoDto? businessInfo = JsonConvert.DeserializeObject<GetBusinessInfoDto>(responseString);
 
+        // check if the business info is correct
         Assert.Equal("test", businessInfo!.Name);
         Assert.Equal("test", businessInfo!.Email);
         Assert.Equal("test", businessInfo!.Phone);
@@ -61,13 +78,19 @@ public class UpdateBusinessInfoTests
             Linkedin = "test2"
         };
 
+        // update business info
         var updateResponse = await client.PatchAsync("/construction/api/info", new StringContent(JsonConvert.SerializeObject(updateBusinessInfoDto), Encoding.UTF8, "application/json"));
+
+        // check if the status code is OK
         Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
 
+        // get the response string
         var updatedResponseString = await updateResponse.Content.ReadAsStringAsync();
 
+        // deserialize the response string
         GetBusinessInfoDto? updatedBusinessInfo = JsonConvert.DeserializeObject<GetBusinessInfoDto>(updatedResponseString);
 
+        // check if the updated business info is correct
         Assert.Equal("test2", updatedBusinessInfo!.Name);
         Assert.Equal("test2", updatedBusinessInfo!.Email);
         Assert.Equal("test2", updatedBusinessInfo!.Phone);
@@ -81,11 +104,16 @@ public class UpdateBusinessInfoTests
         Assert.Equal("test2", updatedBusinessInfo!.Linkedin);
     }
 
+
+
     [Fact]
     public async Task UpdateBusinessInfoWithInvalidToken()
     {
+
+        // create a client
         var client = SharedTestResources.Factory.CreateClient();
 
+        // update business info with invalid token
         var updateBusinessInfoDto = new UpdateBusinessInfoDto
         {
             Name = "test2",
@@ -101,18 +129,26 @@ public class UpdateBusinessInfoTests
             Linkedin = "test2"
         };
 
+        // set the token in the client headers to an invalid token
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "invalid-token");
 
+        // update business info
         var updateResponse = await client.PatchAsync("/construction/api/info", new StringContent(JsonConvert.SerializeObject(updateBusinessInfoDto), Encoding.UTF8, "application/json"));
 
+        // check if the status code is Unauthorized
         Assert.Equal(HttpStatusCode.Unauthorized, updateResponse.StatusCode);
     }
+
+
 
     [Fact]
     public async Task UpdateBusinessInfoNoToken()
     {
+
+        // create a client
         var client = SharedTestResources.Factory.CreateClient();
 
+        // update business info with no token
         var updateBusinessInfoDto = new UpdateBusinessInfoDto
         {
             Name = "test2",
@@ -128,8 +164,10 @@ public class UpdateBusinessInfoTests
             Linkedin = "test2"
         };
 
+        // update business info
         var updateResponse = await client.PatchAsync("/construction/api/info", new StringContent(JsonConvert.SerializeObject(updateBusinessInfoDto), Encoding.UTF8, "application/json"));
 
+        // check if the status code is Unauthorized
         Assert.Equal(HttpStatusCode.Unauthorized, updateResponse.StatusCode);
     }
 }
