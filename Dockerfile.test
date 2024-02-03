@@ -3,21 +3,21 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 
 WORKDIR /app
 
-# Copy both the main application and test project .csproj files
+# copy the project files
 COPY ["construction/construction.csproj", "construction/"]
 COPY ["construction.tests/construction.tests.csproj", "construction.tests/"]
 
-# Restore NuGet packages for both projects
+# restore the project dependencies
 RUN dotnet restore "construction/construction.csproj"
 RUN dotnet restore "construction.tests/construction.tests.csproj"
 
-# Copy the entire solution
+# copy the entire project
 COPY . ./
 
-# set testing connection string
+# set testing connection string and environment
 ENV ConnectionStrings__TestConnection="Server=test-database;Database=construction_test;User Id=test;Password=password;"
 ENV ASPNETCORE_ENVIRONMENT="Testing"
 
-# Run the tests for the test project
+# run the tests
 WORKDIR /app/construction.tests
 CMD ["dotnet", "test"]

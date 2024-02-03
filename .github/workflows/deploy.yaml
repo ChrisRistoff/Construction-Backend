@@ -13,12 +13,14 @@ jobs:
       - name: Checkout and clone repo
         uses: actions/checkout@v4.1.1
 
+
       - name: Create appsettings.json
         run: |
           cat > ${{github.workspace}}/construction/appsettings.json <<EOF
           ${{ secrets.APPSETTINGS_JSON }}
           EOF
         shell: bash
+ 
  
       - name: Set up SSH
         env:
@@ -29,11 +31,13 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H 4.234.160.181 >> ~/.ssh/known_hosts
 
+
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: krahristov
           password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+
 
       - name: Build and push Docker image
         run: |
@@ -42,9 +46,9 @@ jobs:
 
 
       - name: Copy deployment script
-
         run: |
           scp -o StrictHostKeyChecking=no Scripts/DeployScriptConstructionBackend.sh azureuser@4.234.160.181:~
+
 
       - name: Run deployment script
         run: |

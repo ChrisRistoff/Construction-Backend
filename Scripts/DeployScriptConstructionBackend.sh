@@ -2,13 +2,14 @@
 
 set -e
 
+echo "Setting environment variables..."
 CONTAINER_NAME="construction-back"
 IMAGE_NAME="krahristov/construction-backend:latest"
 APP_DIR="$HOME/construction-backend"
 
 echo "Starting deployment..."
 
-echo "Pulling the Docker image..."
+echo "Pulling the latest Docker image..."
 sudo docker pull $IMAGE_NAME
 
 echo "Stopping the existing Docker container..."
