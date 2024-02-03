@@ -18,9 +18,13 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '8.0'
-          
-      - name: Decrypt appsettings.json
-        run: openssl aes-256-cbc -d -in construction/appsettings.json.enc -out construction/appsettings.json -k ${{ secrets.ENCRYPTION_KEY }} -pbkdf2 -iter 100000
+
+      - name: Create appsettings.json
+        run: |
+          cat > ${{github.workspace}}/construction/appsettings.json <<EOF
+          ${{ secrets.APPSETTINGS_JSON }}
+          EOF
+        shell: bash
 
       - name: Test
         run: docker-compose -f docker-compose.test.yml up --build --exit-code-from test-app
