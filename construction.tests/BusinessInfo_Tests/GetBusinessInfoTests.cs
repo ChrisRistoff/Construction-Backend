@@ -2,22 +2,34 @@ using System.Net;
 using construction.Dtos;
 using Newtonsoft.Json;
 
+
+
 [Collection("Sequential")]
 public class GetBusinessInfoTests
 {
+
+
+
     [Fact]
     public async Task GetBusinessInfo()
     {
+
+        // create a client
         var client = SharedTestResources.Factory.CreateClient();
 
+        // get the business info
         var response = await client.GetAsync("/construction/api/info");
 
+        // check if the status code is OK
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
+        // get the response string
         var responseString = await response.Content.ReadAsStringAsync();
 
+        // deserialize the response string
         GetBusinessInfoDto? businessInfo = JsonConvert.DeserializeObject<GetBusinessInfoDto>(responseString);
 
+        // check if the business info is correct
         Assert.Equal("test", businessInfo!.Name);
         Assert.Equal("test", businessInfo!.Email);
         Assert.Equal("test", businessInfo!.Phone);
