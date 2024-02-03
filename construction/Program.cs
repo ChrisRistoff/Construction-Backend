@@ -10,6 +10,9 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+
+// set up cors
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", builder =>
@@ -20,6 +23,9 @@ builder.Services.AddCors(options =>
     });
 });
 
+
+
+// set up jwt authentication
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -39,6 +45,9 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
+
+
+// set up swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -69,11 +78,16 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// connection strings
+
+
 builder.Services.AddControllers();
 
+
+
+// get the environment
 string? env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
 
+// set the connection string based on the environment
 string connectionStringName = "";
 
 if (env == "Testing")
@@ -96,8 +110,10 @@ if (env == "DockerTest")
     connectionStringName = "DockerTestConnection";
 }
 
+// set up database context
 builder.Services.AddDbContext<MyContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString(connectionStringName)));
+
 
 
 // repositories
@@ -105,37 +121,50 @@ builder.Services.AddScoped<AdminRepository>();
 builder.Services.AddScoped<BusinessInfoRepository>();
 builder.Services.AddScoped<JobTypesRepository>();
 
+
+
 // services
 builder.Services.AddTransient<AuthService>();
 
 
+
+// build the app
 var app = builder.Build();
 
-if (env == "Development" || env == "Testing" || env == "DockerTest")
+// set up migrations and seeding
+if (env == "Development" || env == "Testing")
 {
     try
     {
+
+        // migrate
         using (var scope = app.Services.CreateScope())
         {
             var dbContext = scope.ServiceProvider.GetRequiredService<MyContext>();
             dbContext.Database.Migrate();
         }
 
+        // seed
         await SeedAdmin.Seed(builder.Configuration.GetConnectionString(connectionStringName), builder.Configuration);
         await SeedBusinessInfo.Seed(builder.Configuration.GetConnectionString(connectionStringName), builder.Configuration);
         await SeedJobTypes.Seed(builder.Configuration.GetConnectionString(connectionStringName), builder.Configuration);
     }
+
     catch (Exception ex)
     {
         Console.WriteLine("An error occurred during migration or seeding: " + ex.Message);
     }
 }
 
+
+// swagger in dev and production
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+
 
 app.UseCors("AllowAll");
 

@@ -5,22 +5,34 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace construction.Controllers;
 
+
+
 [ApiController]
 public class PersonalInfoController(BusinessInfoRepository businessInfoRepository) : ControllerBase
 {
+
+
+
     [HttpGet("construction/api/info")]
     public async Task<ActionResult<GetBusinessInfoDto>> GetPersonalInfo()
     {
         try
         {
+
+            // get personal info
             var businessInfo = await businessInfoRepository.GetBusinessInfo();
+
+            // return personal info
             return Ok(businessInfo);
         }
+
         catch (Exception e)
         {
             return BadRequest(e.Message);
         }
     }
+
+
 
     [HttpPatch("construction/api/info")]
     [Authorize]
@@ -28,10 +40,14 @@ public class PersonalInfoController(BusinessInfoRepository businessInfoRepositor
     {
         try
         {
+
+            // update personal info
             var updatedBusinessInfo = await businessInfoRepository.UpdateBusinessInfo(businessInfo);
 
+            // return updated personal info
             return Ok(updatedBusinessInfo);
         }
+
         catch (Exception e)
         {
             return BadRequest(e.Message);

@@ -6,12 +6,19 @@ using construction.Services;
 
 namespace construction.Seed;
 
+
+
 public class SeedAdmin
 {
+
+
     public static async Task Seed(string? connectionString, IConfiguration configuration)
     {
+
+        // get admin data
         Admin[] adminData = new AdminData().GetAdminData();
 
+        // create a connection
         await using var connection = new NpgsqlConnection(connectionString);
 
         Console.WriteLine("Seeding admin...");
