@@ -120,6 +120,7 @@ builder.Services.AddDbContext<MyContext>(options =>
 builder.Services.AddScoped<AdminRepository>();
 builder.Services.AddScoped<BusinessInfoRepository>();
 builder.Services.AddScoped<JobTypesRepository>();
+builder.Services.AddScoped<JobsRepository>();
 
 
 

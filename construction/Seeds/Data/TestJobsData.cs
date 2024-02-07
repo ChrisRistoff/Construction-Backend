@@ -10,11 +10,11 @@ public class JobsData
         {
             new GetAllJobsDto
             {
-                Id = 1,
+                Job_Id = 1,
                 Title = "test",
                 Tagline = "test",
                 Description = "test",
-                JobType = "test",
+                Job_Type = "test",
                 Date = new DateTime(2022, 1, 1),
                 Client = "test",
                 Location = "test",
@@ -23,11 +23,11 @@ public class JobsData
 
             new GetAllJobsDto
             {
-                Id = 2,
+                Job_Id = 2,
                 Title = "test",
                 Tagline = "test",
                 Description = "test",
-                JobType = "test",
+                Job_Type = "test",
                 Date = new DateTime(2022, 1, 1),
                 Client = "test",
                 Location = "test",

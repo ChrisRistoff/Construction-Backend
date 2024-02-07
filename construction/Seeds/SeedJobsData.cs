@@ -26,7 +26,7 @@ public class SeedJobs
         sql.Append("INSERT INTO jobs (job_id, title, tagline, description, job_type, date, client, location) VALUES ");
         foreach (var job in jobsData)
         {
-            sql.Append($"({job.Id}, '{job.Title}', '{job.Tagline}', '{job.Description}', '{job.JobType}', '{job.Date}', '{job.Client}', '{job.Location}'),");
+            sql.Append($"({job.Job_Id}, '{job.Title}', '{job.Tagline}', '{job.Description}', '{job.Job_Type}', '{job.Date}', '{job.Client}', '{job.Location}'),");
         }
         sql.Remove(sql.Length - 1, 1);
 
