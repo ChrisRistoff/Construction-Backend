@@ -18,7 +18,6 @@ public class JobsData
                 Date = new DateTime(2022, 1, 1),
                 Client = "test",
                 Location = "test",
-                Name = "test"
             },
 
             new GetAllJobsDto
@@ -31,7 +30,6 @@ public class JobsData
                 Date = new DateTime(2022, 1, 1),
                 Client = "test",
                 Location = "test",
-                Name = "test"
             }
         };
     }
