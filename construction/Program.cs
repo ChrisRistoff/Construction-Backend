@@ -148,6 +148,7 @@ if (env == "Development" || env == "Testing")
         await SeedAdmin.Seed(builder.Configuration.GetConnectionString(connectionStringName), builder.Configuration);
         await SeedBusinessInfo.Seed(builder.Configuration.GetConnectionString(connectionStringName), builder.Configuration);
         await SeedJobTypes.Seed(builder.Configuration.GetConnectionString(connectionStringName), builder.Configuration);
+        await SeedJobs.Seed(builder.Configuration.GetConnectionString(connectionStringName), builder.Configuration);
     }
 
     catch (Exception ex)
