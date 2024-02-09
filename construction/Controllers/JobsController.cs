@@ -43,6 +43,12 @@ public class JobsController(JobsRepository jobsRepository) : ControllerBase
             // get job
             var job = await jobsRepository.GetJob(id);
 
+            // 404 if job not found
+            if (job == null)
+            {
+                return NotFound();
+            }
+
             // return job
             return Ok(job);
         }
@@ -52,5 +58,4 @@ public class JobsController(JobsRepository jobsRepository) : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
 }
