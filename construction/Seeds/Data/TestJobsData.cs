@@ -1,6 +1,6 @@
 using construction.Dtos;
 
-namespace construction.Seeds.Data;
+namespace construction.Seeds;
 
 public class JobsData
 {
