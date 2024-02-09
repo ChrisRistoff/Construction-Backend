@@ -32,4 +32,25 @@ public class JobsController(JobsRepository jobsRepository) : ControllerBase
         }
     }
 
+
+
+    [HttpGet("construction/api/jobs/{id}")]
+    public async Task<ActionResult<GetJobDto>> GetJob(int id)
+    {
+        try
+        {
+
+            // get job
+            var job = await jobsRepository.GetJob(id);
+
+            // return job
+            return Ok(job);
+        }
+
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
 }

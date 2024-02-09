@@ -47,15 +47,10 @@ public class JobsRepository : IJobsRepository
     {
         await using var connection = new NpgsqlConnection(_connectionString);
 
-        StringBuilder sql = new StringBuilder();
+        GetJobDto? job = await connection.QueryFirstOrDefaultAsync<GetJobDto>("SELECT * FROM jobs WHERE job_id = @Id", new { Id = id });
 
-        sql.Append("SELECT j.* ");
-        sql.Append("JSON_AGG(ji) AS images ");
-        sql.Append("FROM jobs j ");
-        sql.Append("LEFT JOIN jobs_images ji ON j.job_id = ji.job_id ");
-        sql.Append("WHERE j.job_id = @Id ");
-        sql.Append("GROUP BY j.job_id ");
+        job.Images = (List<Images>?)await connection.QueryAsync<Images>("SELECT * FROM jobs_images WHERE job_id = @Id", new { Id = id });
 
-        return await connection.QueryFirstOrDefaultAsync<GetJobDto>(sql.ToString(), new { Id = id });
+        return job;
     }
 }
