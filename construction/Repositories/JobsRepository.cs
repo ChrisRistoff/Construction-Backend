@@ -36,12 +36,16 @@ public class JobsRepository : IJobsRepository
         }
     }
 
+
+
     public async Task<IEnumerable<GetAllJobsDto>?> GetJobs()
     {
         await using var connection = new NpgsqlConnection(_connectionString);
 
         return await connection.QueryAsync<GetAllJobsDto>("SELECT * FROM jobs");
     }
+
+
 
     public async Task<GetJobDto?> GetJob(int id)
     {

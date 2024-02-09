@@ -21,6 +21,8 @@ public class GetAllJobsDto
     public string? Location { get; set; }
 }
 
+
+
 public class GetJobDto
 {
     public int Job_Id { get; set; }
@@ -41,6 +43,8 @@ public class GetJobDto
 
     public List<Images>? Images { get; set; }
 }
+
+
 
 public class Images
 {
