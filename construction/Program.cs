@@ -120,6 +120,7 @@ builder.Services.AddDbContext<MyContext>(options =>
 builder.Services.AddScoped<AdminRepository>();
 builder.Services.AddScoped<BusinessInfoRepository>();
 builder.Services.AddScoped<JobTypesRepository>();
+builder.Services.AddScoped<JobsRepository>();
 
 
 
@@ -148,6 +149,7 @@ if (env == "Development" || env == "Testing")
         await SeedAdmin.Seed(builder.Configuration.GetConnectionString(connectionStringName), builder.Configuration);
         await SeedBusinessInfo.Seed(builder.Configuration.GetConnectionString(connectionStringName), builder.Configuration);
         await SeedJobTypes.Seed(builder.Configuration.GetConnectionString(connectionStringName), builder.Configuration);
+        await SeedJobs.Seed(builder.Configuration.GetConnectionString(connectionStringName), builder.Configuration);
     }
 
     catch (Exception ex)

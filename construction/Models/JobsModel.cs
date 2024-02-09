@@ -27,7 +27,7 @@ public class Jobs
 
     [Column("date")]
     [NotNull]
-    public DateTime? Date { get; set; }
+    public DateTime? Date { get; set; } = DateTime.Now;
 
     [Column("client")]
     [NotNull]
