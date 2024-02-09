@@ -1,3 +1,4 @@
+using System.Text;
 using Dapper;
 using Npgsql;
 using construction.Interfaces;
@@ -35,10 +36,32 @@ public class JobsRepository : IJobsRepository
         }
     }
 
+
+
     public async Task<IEnumerable<GetAllJobsDto>?> GetJobs()
     {
         await using var connection = new NpgsqlConnection(_connectionString);
 
         return await connection.QueryAsync<GetAllJobsDto>("SELECT * FROM jobs");
+    }
+
+
+
+    public async Task<GetJobDto?> GetJob(int id)
+    {
+        await using var connection = new NpgsqlConnection(_connectionString);
+
+        GetJobDto? job = await connection.QueryFirstOrDefaultAsync<GetJobDto>("SELECT * FROM jobs WHERE job_id = @Id", new { Id = id });
+
+        if (job == null)
+        {
+            return null;
+        }
+
+        var images = await connection.QueryAsync<Images>("SELECT * FROM jobs_images WHERE job_id = @Id", new { Id = id });
+
+        job.Images = (List<Images>?)images;
+
+        return job;
     }
 }

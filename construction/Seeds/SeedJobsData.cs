@@ -1,6 +1,6 @@
 using System.Text;
 using construction.Dtos;
-using construction.Seeds.Data;
+using construction.Seeds;
 using Dapper;
 using Npgsql;
 
