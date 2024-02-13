@@ -1,3 +1,4 @@
+using System.Text;
 using Dapper;
 using Npgsql;
 using construction.Interfaces;
@@ -64,6 +65,25 @@ public class JobTypesRepository : IJobTypesRepository
 
     public Task<AddJobTypeDto?> CreateJobType(AddJobTypeDto jobType)
     {
-        throw new NotImplementedException();
+
+        // create a connection
+        using var connection = new NpgsqlConnection(_connectionString);
+
+        // create sql string
+        StringBuilder sql = new StringBuilder();
+        sql.Append("INSERT INTO job_types (name, description, image, icon) VALUES (");
+        sql.Append("@Name, @Description, @Image, @Icon");
+        sql.Append(")");
+
+        // insert and return job type
+        return connection.QueryFirstOrDefaultAsync<AddJobTypeDto>(sql.ToString(),
+            new
+            {
+                Name = jobType.Name,
+                Description = jobType.Description,
+                Image = jobType.Image,
+                Icon = jobType.Icon
+            }
+        );
     }
 }
