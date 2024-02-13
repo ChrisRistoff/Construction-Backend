@@ -63,7 +63,7 @@ public class JobTypesRepository : IJobTypesRepository
 
 
 
-    public Task<AddJobTypeDto?> CreateJobType(AddJobTypeDto jobType)
+    public async Task<AddJobTypeDto?> CreateJobType(AddJobTypeDto jobType)
     {
 
         // create a connection
@@ -74,9 +74,10 @@ public class JobTypesRepository : IJobTypesRepository
         sql.Append("INSERT INTO job_types (name, description, image, icon) VALUES (");
         sql.Append("@Name, @Description, @Image, @Icon");
         sql.Append(")");
+        sql.Append(" RETURNING name, description, image, icon");
 
         // insert and return job type
-        return connection.QueryFirstOrDefaultAsync<AddJobTypeDto>(sql.ToString(),
+        return await connection.QueryFirstOrDefaultAsync<AddJobTypeDto>(sql.ToString(),
             new
             {
                 Name = jobType.Name,
