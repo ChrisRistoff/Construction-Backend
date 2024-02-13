@@ -56,4 +56,26 @@ public class JobTypesController(JobTypesRepository jobTypesRepository) : Control
             return BadRequest(e.Message);
         }
     }
+
+
+
+    [HttpPost("construction/api/jobtypes")]
+    [Authorize]
+    public async Task<ActionResult<GetJobTypeDto>> CreateJobType(AddJobTypeDto jobType)
+    {
+        try
+        {
+
+            // create job type
+            var newJobType = await jobTypesRepository.CreateJobType(jobType);
+
+            // return job type
+            return Ok(newJobType);
+        }
+
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }

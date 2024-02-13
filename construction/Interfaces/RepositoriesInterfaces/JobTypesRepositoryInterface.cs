@@ -14,9 +14,7 @@ public interface IJobTypesRepository
     Task<GetJobTypeDto?> GetJobType(string name);
 
 
-    // these are not used yet so I commented them out
-
-    // Task<GetJobTypesDto?> CreateJobType(CreateJobTypesDto jobType);
+    Task<AddJobTypeDto?> CreateJobType(AddJobTypeDto jobType);
     // Task<GetJobTypesDto?> UpdateJobType(UpdateJobTypesDto jobType);
     // Task<bool?> DeleteJobType(int id);
 }
