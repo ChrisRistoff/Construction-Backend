@@ -58,4 +58,31 @@ public class JobsController(JobsRepository jobsRepository) : ControllerBase
             return BadRequest(e.Message);
         }
     }
+
+
+
+    [HttpPatch("construction/api/jobs/{id}")]
+    [Authorize]
+    public async Task<ActionResult<EditJobDto>> EditJob(EditJobDto job, int id)
+    {
+        try
+        {
+            // edit job
+            var editedJob = await jobsRepository.EditJob(job, id);
+
+            // 404 if job not found
+            if (editedJob == null)
+            {
+                return NotFound();
+            }
+
+            // return job
+            return Ok(editedJob);
+        }
+
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }

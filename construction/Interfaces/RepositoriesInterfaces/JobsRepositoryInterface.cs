@@ -14,5 +14,5 @@ public interface IJobsRepository
     Task<GetJobDto?> GetJob(int id);
 
     // edit job
-    Task<EditJobDto?> EditJob(EditJobDto job);
+    Task<EditJobDto?> EditJob(EditJobDto job, int id);
 }
