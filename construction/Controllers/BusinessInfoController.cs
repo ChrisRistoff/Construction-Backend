@@ -8,7 +8,7 @@ namespace construction.Controllers;
 
 
 [ApiController]
-public class PersonalInfoController(BusinessInfoRepository businessInfoRepository) : ControllerBase
+public class BusinessInfoController(BusinessInfoRepository businessInfoRepository) : ControllerBase
 {
 
 
