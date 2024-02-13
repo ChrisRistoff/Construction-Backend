@@ -64,4 +64,28 @@ public class JobsRepository : IJobsRepository
 
         return job;
     }
+
+
+
+    public async Task<EditJobDto?> UpdateJob(EditJobDto job)
+    {
+        await using var connection = new NpgsqlConnection(_connectionString);
+
+        StringBuilder sql = new StringBuilder();
+        sql.Append("UPDATE jobs SET title = @Title, tagline = @Tagline, description = @Description, job_type = @Job_Type, date = @Date, client = @Client, location = @Location WHERE job_id = @Job_Id");
+
+        EditJobDto? updatedJob = await connection.QueryFirstOrDefaultAsync<EditJobDto>(sql.ToString(), new
+        {
+            Title = job.Title,
+            Tagline = job.Tagline,
+            Description = job.Description,
+            Job_Type = job.Job_Type,
+            Date = job.Date,
+            Client = job.Client,
+            Location = job.Location,
+            Job_Id = job.Job_Id
+        });
+
+        return updatedJob;
+    }
 }
