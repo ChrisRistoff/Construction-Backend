@@ -59,4 +59,11 @@ public class JobTypesRepository : IJobTypesRepository
         // get and return job type
         return await connection.QueryFirstOrDefaultAsync<GetJobTypeDto>("SELECT * FROM job_types WHERE name = @Name", new { Name = name });
     }
+
+
+
+    public Task<AddJobTypeDto?> CreateJobType(AddJobTypeDto jobType)
+    {
+        throw new NotImplementedException();
+    }
 }
