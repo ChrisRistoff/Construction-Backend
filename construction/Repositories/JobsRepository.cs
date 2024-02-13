@@ -69,10 +69,11 @@ public class JobsRepository : IJobsRepository
 
     public async Task<EditJobDto?> EditJob(EditJobDto job, int id)
     {
+
+        // create a connection
         await using var connection = new NpgsqlConnection(_connectionString);
 
-        Console.WriteLine(id);
-
+        // build sql
         StringBuilder sql = new StringBuilder();
         sql.Append("UPDATE jobs");
         sql.Append(" SET title = @Title,");
@@ -83,6 +84,7 @@ public class JobsRepository : IJobsRepository
         sql.Append(" WHERE job_id = @Job_Id");
         sql.Append(" RETURNING title, tagline, description, client, location");
 
+        // update and store job
         EditJobDto? updatedJob = await connection.QueryFirstOrDefaultAsync<EditJobDto>(sql.ToString(), new
         {
             Title = job.Title,
@@ -93,8 +95,7 @@ public class JobsRepository : IJobsRepository
             Job_Id = id
         });
 
-        Console.WriteLine(updatedJob);
-
+        // return updated job
         return updatedJob;
     }
 }
