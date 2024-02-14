@@ -98,4 +98,33 @@ public class JobsRepository : IJobsRepository
         // return updated job
         return updatedJob;
     }
+
+    public async Task<AddJobDto?> AddJob(AddJobDto job)
+    {
+
+        // create a connection
+        await using var connection = new NpgsqlConnection(_connectionString);
+
+        // create sql string
+        StringBuilder sql = new StringBuilder();
+        sql.Append("INSERT INTO jobs (title, tagline, description, job_type, date, client, location)");
+        sql.Append(" VALUES (");
+        sql.Append("@Title, @Tagline, @Description, @Job_Type, @Date, @Client, @Location");
+        sql.Append(")");
+        sql.Append(" RETURNING title, tagline, description, job_type, date, client, location");
+
+        // insert and return job
+        return await connection.QueryFirstOrDefaultAsync<AddJobDto>(sql.ToString(),
+            new
+            {
+                Title = job.Title,
+                Tagline = job.Tagline,
+                Description = job.Description,
+                Job_Type = job.Job_Type,
+                Date = job.Date,
+                Client = job.Client,
+                Location = job.Location
+            }
+        );
+    }
 }
