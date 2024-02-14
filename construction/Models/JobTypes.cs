@@ -19,7 +19,7 @@ public class JobTypes
 
     [Column("image")]
     [NotNull]
-    public string? Image { get; set; }
+    public string? Image { get; set; } = "none";
 
     [Column("icon")]
     [NotNull]

@@ -126,7 +126,7 @@ builder.Services.AddScoped<JobsRepository>();
 
 // services
 builder.Services.AddTransient<AuthService>();
-
+builder.Services.AddTransient<StorageService>();
 
 
 // build the app

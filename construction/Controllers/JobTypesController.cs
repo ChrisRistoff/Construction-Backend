@@ -78,4 +78,26 @@ public class JobTypesController(JobTypesRepository jobTypesRepository) : Control
             return BadRequest(e.Message);
         }
     }
+
+
+
+    [HttpPatch("construction/api/jobtypes/{name}/image")]
+    [Authorize]
+    public async Task<ActionResult<GetJobTypeDto>> UpdateImageToJobType(string name, IFormFile image)
+    {
+        try
+        {
+
+            // update image to job type
+            GetJobTypeDto? newJobType = await jobTypesRepository.UpdateImageToJobType(name, image);
+
+            // return new job type
+            return Ok(newJobType);
+        }
+
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }
