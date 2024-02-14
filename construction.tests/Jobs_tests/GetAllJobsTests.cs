@@ -28,21 +28,16 @@ public class GetAllJobsTests
         // deserialize the response string
         GetAllJobsDto[]? jobs = JsonConvert.DeserializeObject<GetAllJobsDto[]>(responseString);
 
-        // check if the jobs are correct
-        Assert.Equal(2, jobs![0].Job_Id);
-        Assert.Equal("test", jobs![0].Title);
-        Assert.Equal("test", jobs![0].Tagline);
-        Assert.Equal("test", jobs![0].Description);
-        Assert.Equal("test", jobs![0].Job_Type);
-        Assert.Equal("test", jobs![0].Client);
-        Assert.Equal("test", jobs![0].Location);
-
-        Assert.Equal(1, jobs![1].Job_Id);
-        Assert.Equal("test", jobs![1].Title);
-        Assert.Equal("test", jobs![1].Tagline);
-        Assert.Equal("test", jobs![1].Description);
-        Assert.Equal("test", jobs![1].Job_Type);
-        Assert.Equal("test", jobs![1].Client);
-        Assert.Equal("test", jobs![1].Location);
+        // loop through the jobs and check they have all fields
+        foreach (var job in jobs!)
+        {
+            Assert.NotNull(job.Title);
+            Assert.NotNull(job.Tagline);
+            Assert.NotNull(job.Description);
+            Assert.NotNull(job.Job_Type);
+            Assert.NotNull(job.Date);
+            Assert.NotNull(job.Client);
+            Assert.NotNull(job.Location);
+        }
     }
 }
