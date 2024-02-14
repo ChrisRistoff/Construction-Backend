@@ -85,4 +85,25 @@ public class JobsController(JobsRepository jobsRepository) : ControllerBase
             return BadRequest(e.Message);
         }
     }
+
+
+
+    [HttpPost("construction/api/jobs")]
+    [Authorize]
+    public async Task<ActionResult<AddJobDto>> AddJob(AddJobDto job)
+    {
+        try
+        {
+            // add job
+            var addedJob = await jobsRepository.AddJob(job);
+
+            // return job
+            return Ok(addedJob);
+        }
+
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }
