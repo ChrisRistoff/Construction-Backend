@@ -1,7 +1,7 @@
 using Firebase.Storage;
 using construction.Interfaces;
 
-namespace portfolio.Services;
+namespace construction.Services;
 
 public class StorageService(IConfiguration configuration) : IStorageService
 {
