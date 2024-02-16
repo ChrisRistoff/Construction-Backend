@@ -7,6 +7,7 @@ public class JobsImages
 {
 
     [Column("image_id")]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
     [Column("job_id")]

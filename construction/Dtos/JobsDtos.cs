@@ -88,3 +88,12 @@ public class AddJobDto
 
     public string? Location { get; set; }
 }
+
+
+
+public class GetJobImageDto
+{
+    public int Image_Id { get; set; }
+    public int Job_Id { get; set; }
+    public string? Image { get; set; }
+}
