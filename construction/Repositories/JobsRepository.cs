@@ -99,6 +99,8 @@ public class JobsRepository : IJobsRepository
         return updatedJob;
     }
 
+
+
     public async Task<AddJobDto?> AddJob(AddJobDto job)
     {
 
@@ -124,6 +126,35 @@ public class JobsRepository : IJobsRepository
                 Date = job.Date,
                 Client = job.Client,
                 Location = job.Location
+            }
+        );
+    }
+
+
+
+    public async Task<GetJobDto?> AddImageToJob(int id, IFormFile image)
+    {
+
+        // create a connection
+        await using var connection = new NpgsqlConnection(_connectionString);
+
+        // upload image to storage
+        string imageUrl = await _storageService.UploadFileAsync(image.OpenReadStream(), image.FileName);
+
+        // create sql string
+        StringBuilder sql = new StringBuilder();
+        sql.Append("INSERT INTO jobs_images (job_id, image)");
+        sql.Append(" VALUES (");
+        sql.Append("@Job_Id, @Image");
+        sql.Append(")");
+        sql.Append(" RETURNING job_id, image");
+
+        // insert and return job
+        return await connection.QueryFirstOrDefaultAsync<GetJobDto>(sql.ToString(),
+            new
+            {
+                Job_Id = id,
+                Image = imageUrl
             }
         );
     }
