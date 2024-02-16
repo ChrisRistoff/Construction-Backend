@@ -3,6 +3,7 @@ using Dapper;
 using Npgsql;
 using construction.Interfaces;
 using construction.Dtos;
+using construction.Services;
 
 namespace construction.Repositories;
 
@@ -10,11 +11,14 @@ public class JobsRepository : IJobsRepository
 {
 
     private readonly string? _connectionString;
+    private readonly StorageService _storageService;
 
 
     // inject configuration
-    public JobsRepository (IConfiguration config)
+    public JobsRepository (IConfiguration config, StorageService storageService)
     {
+
+        _storageService = storageService;
 
         // get the connection string
         string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
@@ -99,6 +103,8 @@ public class JobsRepository : IJobsRepository
         return updatedJob;
     }
 
+
+
     public async Task<AddJobDto?> AddJob(AddJobDto job)
     {
 
@@ -124,6 +130,35 @@ public class JobsRepository : IJobsRepository
                 Date = job.Date,
                 Client = job.Client,
                 Location = job.Location
+            }
+        );
+    }
+
+
+
+    public async Task<GetJobImageDto?> AddImageToJob(int id, IFormFile image)
+    {
+
+        // create a connection
+        await using var connection = new NpgsqlConnection(_connectionString);
+
+        // upload image to storage
+        string? imageUrl = await _storageService.UploadFileAsync(image.OpenReadStream(), image.FileName);
+
+        // create sql string
+        StringBuilder sql = new StringBuilder();
+        sql.Append("INSERT INTO jobs_images (job_id, image)");
+        sql.Append(" VALUES (");
+        sql.Append("@Job_Id, @Image");
+        sql.Append(")");
+        sql.Append(" RETURNING *");
+
+        // insert and return job
+        return await connection.QueryFirstOrDefaultAsync<GetJobImageDto>(sql.ToString(),
+            new
+            {
+                Job_Id = id,
+                Image = imageUrl
             }
         );
     }

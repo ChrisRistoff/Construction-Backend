@@ -106,4 +106,25 @@ public class JobsController(JobsRepository jobsRepository) : ControllerBase
             return BadRequest(e.Message);
         }
     }
+
+
+
+    [HttpPost("construction/api/jobs/{id}/image")]
+    [Authorize]
+    public async Task<ActionResult<GetJobImageDto>> AddImageToJob(int id, IFormFile image)
+    {
+        try
+        {
+            // add image to job
+            var addedImage = await jobsRepository.AddImageToJob(id, image);
+
+            // return image
+            return Ok(addedImage);
+        }
+
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }
