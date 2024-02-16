@@ -12,6 +12,7 @@ namespace construction.Repositories;
 public class AdminRepository : IAdminRepository
 {
 
+
     private readonly AuthService _authService;
     private readonly string? _connectionString;
 
