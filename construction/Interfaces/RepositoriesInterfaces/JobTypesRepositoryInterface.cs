@@ -17,6 +17,6 @@ public interface IJobTypesRepository
     Task<AddJobTypeDto?> CreateJobType(AddJobTypeDto jobType);
 
     // edit job type
-    Task<GetJobTypeDto?> EditJobType(EditJobTypeDto jobType);
+    Task<GetJobTypeDto?> EditJobType(string name, EditJobTypeDto jobType);
     // Task<bool?> DeleteJobType(int id);
 }

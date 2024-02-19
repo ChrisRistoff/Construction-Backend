@@ -111,7 +111,12 @@ public class JobTypesController(JobTypesRepository jobTypesRepository) : Control
         {
 
             // edit job type
-            var newJobType = await jobTypesRepository.EditJobType(name, jobType);
+            GetJobTypeDto? newJobType = await jobTypesRepository.EditJobType(name, jobType);
+
+            if (newJobType == null)
+            {
+                return NotFound();
+            }
 
             // return new job type
             return Ok(newJobType);
