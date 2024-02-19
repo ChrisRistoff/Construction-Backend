@@ -100,4 +100,31 @@ public class JobTypesController(JobTypesRepository jobTypesRepository) : Control
             return BadRequest(e.Message);
         }
     }
+
+
+
+    [HttpPatch("construction/api/jobtypes/{name}")]
+    [Authorize]
+    public async Task<ActionResult<GetJobTypeDto>> EditJobType(string name, EditJobTypeDto jobType)
+    {
+        try
+        {
+
+            // edit job type
+            GetJobTypeDto? newJobType = await jobTypesRepository.EditJobType(name, jobType);
+
+            if (newJobType == null)
+            {
+                return NotFound();
+            }
+
+            // return new job type
+            return Ok(newJobType);
+        }
+
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }

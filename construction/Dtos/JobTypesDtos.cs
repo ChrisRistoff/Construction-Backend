@@ -23,3 +23,12 @@ public class AddJobTypeDto
 
     public string? Icon { get; set; }
 }
+
+
+
+public class EditJobTypeDto
+{
+    public string? Description { get; set; }
+
+    public string? Icon { get; set; }
+}

@@ -108,4 +108,21 @@ public class JobTypesRepository : IJobTypesRepository
         // update and return job type
         return await connection.QueryFirstOrDefaultAsync<GetJobTypeDto>(sql.ToString(), new { Image = imageUrl, Name = name });
     }
+
+
+
+    public async Task<GetJobTypeDto?> EditJobType(string name, EditJobTypeDto jobType)
+    {
+        // create a connection
+        using var connection = new NpgsqlConnection(_connectionString);
+
+        // create sql string
+        string sql = "UPDATE job_types SET description = @Description, icon = @Icon WHERE name = @Name";
+
+        // update job type without returning
+        await connection.ExecuteAsync(sql, new { Description = jobType.Description, Icon = jobType.Icon, Name = name });
+
+        // get and return job type
+        return await GetJobType(name);
+    }
 }
