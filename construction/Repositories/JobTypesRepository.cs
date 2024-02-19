@@ -111,7 +111,7 @@ public class JobTypesRepository : IJobTypesRepository
 
 
 
-    public Task<GetJobTypeDto?> EditJobType(EditJobTypeDto jobType)
+    public Task<GetJobTypeDto?> EditJobType(string name, EditJobTypeDto jobType)
     {
         // create a connection
         using var connection = new NpgsqlConnection(_connectionString);
@@ -121,6 +121,5 @@ public class JobTypesRepository : IJobTypesRepository
 
         // update and return job type
         return connection.QueryFirstOrDefaultAsync<GetJobTypeDto>(sql, new { Description = jobType.Description, Icon = jobType.Icon, Name = jobType.Name });
-
     }
 }
