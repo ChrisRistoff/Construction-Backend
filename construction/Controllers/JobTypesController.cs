@@ -127,4 +127,32 @@ public class JobTypesController(JobTypesRepository jobTypesRepository) : Control
             return BadRequest(e.Message);
         }
     }
+
+
+
+
+    [HttpDelete("construction/api/jobtypes/{name}")]
+    [Authorize]
+    public async Task<ActionResult> DeleteJobType(string name)
+    {
+        try
+        {
+
+            // delete job type
+            GetJobTypeDto? deleted = await jobTypesRepository.DeleteJobType(name);
+
+            if (deleted == null)
+            {
+                return NotFound();
+            }
+
+            // return deleted
+            return NoContent();
+        }
+
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }

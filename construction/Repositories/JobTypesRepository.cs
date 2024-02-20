@@ -125,4 +125,22 @@ public class JobTypesRepository : IJobTypesRepository
         // get and return job type
         return await GetJobType(name);
     }
+
+
+
+    public async Task<GetJobTypeDto?> DeleteJobType(string name)
+    {
+        // create a connection
+        using var connection = new NpgsqlConnection(_connectionString);
+
+        // delete all jobs of this type
+        string deleteJobsSql = "DELETE FROM jobs WHERE job_type = @Name";
+        await connection.ExecuteAsync(deleteJobsSql, new { Name = name });
+
+        // create sql string
+        string deleteJobTypeSql = "DELETE FROM job_types WHERE name = @Name RETURNING *";
+
+        // delete and return job type
+        return await connection.QueryFirstOrDefaultAsync<GetJobTypeDto>(deleteJobTypeSql, new { Name = name });
+    }
 }
