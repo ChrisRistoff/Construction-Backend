@@ -127,4 +127,7 @@ public class JobTypesController(JobTypesRepository jobTypesRepository) : Control
             return BadRequest(e.Message);
         }
     }
+
+
+
 }
