@@ -20,5 +20,5 @@ public interface IJobTypesRepository
     Task<GetJobTypeDto?> EditJobType(string name, EditJobTypeDto jobType);
 
     // delete job type
-    Task<bool?> DeleteJobType(int id);
+    Task<GetJobTypeDto?> DeleteJobType(string name);
 }
