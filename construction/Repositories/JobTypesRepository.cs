@@ -152,7 +152,7 @@ public class JobTypesRepository : IJobTypesRepository
                 try
                 {
                     // delete each image from the storage
-                    await _storageService.DeleteFileAsync(image.Image);
+                    if (image.Image != null) await _storageService.DeleteFileAsync(image.Image);
                 }
                 catch (Exception e)
                 {
@@ -162,6 +162,8 @@ public class JobTypesRepository : IJobTypesRepository
 
             // delete each image from the database
             string deleteImagesSql = "DELETE FROM jobs_images WHERE job_id = @Id";
+
+            await connection.ExecuteAsync(deleteImagesSql, new { Id = job.Job_Id});
 
             // delete the job
             string deleteJobSql = "DELETE FROM jobs WHERE job_id = @Id";

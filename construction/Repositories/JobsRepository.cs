@@ -105,7 +105,7 @@ public class JobsRepository : IJobsRepository
 
 
 
-    public async Task<AddJobDto?> AddJob(AddJobDto job)
+    public async Task<GetJobDto?> AddJob(AddJobDto job)
     {
 
         // create a connection
@@ -117,10 +117,10 @@ public class JobsRepository : IJobsRepository
         sql.Append(" VALUES (");
         sql.Append("@Title, @Tagline, @Description, @Job_Type, @Date, @Client, @Location");
         sql.Append(")");
-        sql.Append(" RETURNING title, tagline, description, job_type, date, client, location");
+        sql.Append(" RETURNING *");
 
         // insert and return job
-        return await connection.QueryFirstOrDefaultAsync<AddJobDto>(sql.ToString(),
+        return await connection.QueryFirstOrDefaultAsync<GetJobDto>(sql.ToString(),
             new
             {
                 Title = job.Title,
@@ -161,5 +161,43 @@ public class JobsRepository : IJobsRepository
                 Image = imageUrl
             }
         );
+    }
+
+
+
+    public async Task<GetJobDto?> DeleteJob(int id)
+    {
+        // create a connection
+        await using var connection = new NpgsqlConnection(_connectionString);
+
+        // get job
+        GetJobDto? job = await GetJob(id);
+
+        if (job == null)
+        {
+            return null;
+        }
+
+        // delete images from storage
+        foreach (var image in job.Images!)
+        {
+            try
+            {
+                if (image.Image != null) await _storageService.DeleteFileAsync(image.Image);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        // delete images from database
+        string deleteImagesSql = "DELETE FROM jobs_images WHERE job_id = @Id";
+        await connection.ExecuteAsync(deleteImagesSql, new { Id = id });
+
+        // delete job
+        string deleteJobSql = "DELETE FROM jobs WHERE job_id = @Id RETURNING *";
+
+        return await connection.QueryFirstOrDefaultAsync<GetJobDto>(deleteJobSql, new { Id = id });
     }
 }
