@@ -105,7 +105,7 @@ public class JobsRepository : IJobsRepository
 
 
 
-    public async Task<AddJobDto?> AddJob(AddJobDto job)
+    public async Task<GetJobDto?> AddJob(AddJobDto job)
     {
 
         // create a connection
@@ -117,10 +117,10 @@ public class JobsRepository : IJobsRepository
         sql.Append(" VALUES (");
         sql.Append("@Title, @Tagline, @Description, @Job_Type, @Date, @Client, @Location");
         sql.Append(")");
-        sql.Append(" RETURNING title, tagline, description, job_type, date, client, location");
+        sql.Append(" RETURNING *");
 
         // insert and return job
-        return await connection.QueryFirstOrDefaultAsync<AddJobDto>(sql.ToString(),
+        return await connection.QueryFirstOrDefaultAsync<GetJobDto>(sql.ToString(),
             new
             {
                 Title = job.Title,
