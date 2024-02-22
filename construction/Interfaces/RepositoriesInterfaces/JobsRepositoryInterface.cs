@@ -18,4 +18,7 @@ public interface IJobsRepository
 
     // add job
     Task<AddJobDto?> AddJob(AddJobDto job);
+
+    // delete job
+    Task<GetJobDto?> DeleteJob(int id);
 }
