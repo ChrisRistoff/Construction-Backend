@@ -179,7 +179,7 @@ public class JobsRepository : IJobsRepository
         }
 
         // delete images from storage
-        foreach (var image in job.Images)
+        foreach (var image in job.Images!)
         {
             try
             {
@@ -193,7 +193,6 @@ public class JobsRepository : IJobsRepository
 
         // delete images from database
         string deleteImagesSql = "DELETE FROM jobs_images WHERE job_id = @Id";
-
         await connection.ExecuteAsync(deleteImagesSql, new { Id = id });
 
         // delete job
