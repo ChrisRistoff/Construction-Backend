@@ -133,9 +133,40 @@ public class JobTypesRepository : IJobTypesRepository
         // create a connection
         using var connection = new NpgsqlConnection(_connectionString);
 
-        // delete all jobs of this type
-        string deleteJobsSql = "DELETE FROM jobs WHERE job_type = @Name";
-        await connection.ExecuteAsync(deleteJobsSql, new { Name = name });
+        // get all jobs with the job type
+        string getJobsSql = "SELECT * FROM jobs WHERE job_type = @Name";
+
+        // get all jobs with the job type
+        IEnumerable<GetJobDto> jobs = await connection.QueryAsync<GetJobDto>(getJobsSql, new { Name = name });
+
+        // get each job and delete the images and the job
+        foreach (GetJobDto job in jobs)
+        {
+            // get all images of the job
+            string getImagesSql = "SELECT * FROM jobs_images WHERE job_id = @Id";
+            var images = await connection.QueryAsync<GetJobImageDto>(getImagesSql, new { Id = job.Job_Id});
+
+            // delete each image
+            foreach (var image in images)
+            {
+                try
+                {
+                    // delete each image from the storage
+                    await _storageService.DeleteFileAsync(image.Image);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+
+            // delete each image from the database
+            string deleteImagesSql = "DELETE FROM jobs_images WHERE job_id = @Id";
+
+            // delete the job
+            string deleteJobSql = "DELETE FROM jobs WHERE job_id = @Id";
+            await connection.ExecuteAsync(deleteJobSql, new { Id = job.Job_Id});
+        }
 
         // create sql string
         string deleteJobTypeSql = "DELETE FROM job_types WHERE name = @Name RETURNING *";
