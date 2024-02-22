@@ -170,21 +170,26 @@ public class JobsRepository : IJobsRepository
         // create a connection
         await using var connection = new NpgsqlConnection(_connectionString);
 
+        Console.WriteLine("Deleting job with id: " + id);
+
         // get job
-        GetJobDto? job =
-            await connection.QueryFirstOrDefaultAsync<GetJobDto>("SELECT * FROM jobs WHERE job_id = @Id",
-                new { Id = id });
+        GetJobDto? job = await GetJob(id);
+
+        Console.WriteLine("Job: " + job);
 
         if (job == null)
         {
             return null;
         }
 
+        Console.WriteLine("Not null, deleting images");
+
         // delete images from storage
         foreach (var image in job.Images)
         {
             try
             {
+                Console.WriteLine("Deleting image: " + image.Image);
                 if (image.Image != null) await _storageService.DeleteFileAsync(image.Image);
             }
             catch (Exception e)
@@ -193,10 +198,14 @@ public class JobsRepository : IJobsRepository
             }
         }
 
+        Console.WriteLine("Images deleted, deleting images from database");
+
         // delete images from database
         string deleteImagesSql = "DELETE FROM jobs_images WHERE job_id = @Id";
 
         await connection.ExecuteAsync(deleteImagesSql, new { Id = id });
+
+        Console.WriteLine("Images deleted from database, deleting job");
 
         // delete job
         string deleteJobSql = "DELETE FROM jobs WHERE job_id = @Id RETURNING *";
