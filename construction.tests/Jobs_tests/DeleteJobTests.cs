@@ -76,4 +76,77 @@ public class DeleteJobTests
         // ensure not found status code
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
+
+
+
+    [Fact]
+    public async Task DeleteJob_InvalidJob_ReturnsNotFound()
+    {
+
+        // client
+        var client = SharedTestResources.Factory.CreateClient();
+
+        // admin
+        var admin = new LoginRequestDto()
+        {
+            Name = "test",
+            Password = "test"
+        };
+
+        // login
+        var response = await client.PostAsJsonAsync("construction/api/login-admin", admin);
+
+        // check status code
+        response.EnsureSuccessStatusCode();
+
+        // get token from response
+        var loginContent = await response.Content.ReadAsStringAsync();
+
+        // deserialize token
+        var token = JsonConvert.DeserializeObject<LoginResponseDto>(loginContent)!.Token;
+
+        // set token
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        // delete job
+        response = await client.DeleteAsync("construction/api/jobs/0");
+
+        // ensure not found status code
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+
+
+    [Fact]
+    public async Task DeleteJob_Unauthorized_ReturnsUnauthorized()
+    {
+
+        // client
+        var client = SharedTestResources.Factory.CreateClient();
+
+        // delete job
+        var response = await client.DeleteAsync("construction/api/jobs/0");
+
+        // ensure unauthorized status code
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+
+
+
+    [Fact]
+    public async Task DeleteJob_InvalidToken_ReturnsUnauthorized()
+    {
+
+        // client
+        var client = SharedTestResources.Factory.CreateClient();
+
+        // set token
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "invalid token");
+
+        // delete job
+        var response = await client.DeleteAsync("construction/api/jobs/0");
+
+        // ensure unauthorized status code
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
 }
