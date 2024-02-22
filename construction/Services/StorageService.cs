@@ -22,4 +22,20 @@ public class StorageService(IConfiguration configuration) : IStorageService
         var downloadUrl = await task;
         return downloadUrl;
     }
+
+
+
+    public async Task DeleteFileAsync(string fileLink)
+    {
+        var task = new FirebaseStorage(_bucket, new FirebaseStorageOptions
+            {
+                AuthTokenAsyncFactory = () => Task.FromResult(_apiKey),
+                ThrowOnCancel = true
+            })
+            .Child("images")
+            .Child(fileLink)
+            .DeleteAsync();
+
+        await task;
+    }
 }
