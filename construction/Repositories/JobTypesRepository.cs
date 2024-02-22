@@ -98,15 +98,27 @@ public class JobTypesRepository : IJobTypesRepository
         // create a connection
         using var connection = new NpgsqlConnection(_connectionString);
 
+        // get job type
+        var jobType = await GetJobType(name);
+
+        // delete image from storage
+        try
+        {
+            if (jobType!.Image != null) await _storageService.DeleteFileAsync(jobType.Image);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Image not found in storage");
+        }
+
         // upload image to storage
         string imageUrl = await _storageService.UploadFileAsync(image.OpenReadStream(), image.FileName);
 
         // create sql string
-        StringBuilder sql = new StringBuilder();
-        sql.Append("UPDATE job_types SET image = @Image WHERE name = @Name RETURNING *");
+        string sql = "UPDATE job_types SET image = @Image WHERE name = @Name RETURNING *";
 
         // update and return job type
-        return await connection.QueryFirstOrDefaultAsync<GetJobTypeDto>(sql.ToString(), new { Image = imageUrl, Name = name });
+        return await connection.QueryFirstOrDefaultAsync<GetJobTypeDto>(sql, new { Image = imageUrl, Name = name });
     }
 
 
