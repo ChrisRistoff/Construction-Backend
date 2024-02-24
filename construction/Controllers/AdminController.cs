@@ -54,7 +54,7 @@ public class AdminController(AdminRepository adminRepository) : ControllerBase
         // delay the response so I don't get a warning
         await Task.Delay(0);
 
-        // return authorized message
-        return Ok("You are authorized");
+        // return authorized message object
+        return Ok(new {message = "Authorized"});
     }
 }
