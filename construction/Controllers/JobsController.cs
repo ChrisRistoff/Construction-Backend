@@ -157,14 +157,14 @@ public class JobsController(JobsRepository jobsRepository) : ControllerBase
 
 
 
-    [HttpDelete("construction/api/jobs/image")]
+    [HttpDelete("construction/api/jobs/image/{imageId}")]
     [Authorize]
-    public async Task<ActionResult> DeleteImageFromJob(DeleteImageDto image)
+    public async Task<ActionResult> DeleteImageFromJob(int imageId)
     {
         try
         {
             // delete image from job
-            var deletedImage = await jobsRepository.DeleteImageFromJob(image.Image_Id, image.Image);
+            var deletedImage = await jobsRepository.DeleteImageFromJob(imageId);
 
             // 404 if image not found
             if (deletedImage == null)
