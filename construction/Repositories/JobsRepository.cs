@@ -183,7 +183,7 @@ public class JobsRepository : IJobsRepository
         {
             await _storageService.DeleteFileAsync(image.Image!);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             Console.WriteLine("Image not found in storage");
         }

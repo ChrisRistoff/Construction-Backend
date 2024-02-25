@@ -29,7 +29,7 @@ public class StorageService(IConfiguration configuration) : IStorageService
     public async Task DeleteFileAsync(string? fileLink)
     {
         // extract the path from the URL
-        Uri fileUri = new Uri(fileLink);
+        Uri fileUri = new Uri(fileLink!);
         string filePath = WebUtility.UrlDecode(fileUri.AbsolutePath);
 
         // extract the file path after '/images/'
