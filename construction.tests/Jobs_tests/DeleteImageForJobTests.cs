@@ -117,13 +117,6 @@ public class DeleteImageForJobTests
         // client
         var client = SharedTestResources.Factory.CreateClient();
 
-        // set image dto
-        DeleteImageDto image = new DeleteImageDto()
-        {
-            Image_Id = 4,
-            Image = "test"
-        };
-
         // create a new HTTP request
         var request = new HttpRequestMessage(HttpMethod.Delete, "construction/api/jobs/image/2");
 
@@ -145,13 +138,6 @@ public class DeleteImageForJobTests
 
         // set token
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "invalid token");
-
-        // set image dto
-        DeleteImageDto image = new DeleteImageDto()
-        {
-            Image_Id = 4,
-            Image = "test"
-        };
 
         // create a new HTTP request
         var request = new HttpRequestMessage(HttpMethod.Delete, "construction/api/jobs/image/2");
