@@ -163,6 +163,10 @@ public class JobsRepository : IJobsRepository
         );
     }
 
+    public Task<GetJobImageDto?> DeleteImageFromJob(int imageId)
+    {
+        throw new NotImplementedException();
+    }
 
 
     public async Task<GetJobDto?> DeleteJob(int id)
