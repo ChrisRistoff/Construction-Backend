@@ -42,25 +42,11 @@ public class DeleteImageForJobTests
         // set token
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        // set image dto
-        DeleteImageDto image = new DeleteImageDto()
-        {
-            Image_Id = 4,
-            Image = "test"
-        };
-
-        // create a new HTTP request
-        var request = new HttpRequestMessage(HttpMethod.Delete, "construction/api/jobs/image")
-        {
-            // Add the content to the request
-            Content = new StringContent(JsonConvert.SerializeObject(image), Encoding.UTF8, "application/json")
-        };
-
-        // send request
-        var deletedImageResponse = await client.SendAsync(request);
+        // delete image request
+        var deleteImage = await client.DeleteAsync("construction/api/jobs/image/4");
 
         // check status code
-        Assert.Equal(HttpStatusCode.NoContent, deletedImageResponse.StatusCode);
+        Assert.Equal(HttpStatusCode.NoContent, deleteImage.StatusCode);
 
         // get job
         response = await client.GetAsync("construction/api/jobs/1");
@@ -112,19 +98,8 @@ public class DeleteImageForJobTests
         // set token
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        // set image dto
-        DeleteImageDto image = new DeleteImageDto()
-        {
-            Image_Id = 9999999,
-            Image = "test"
-        };
-
         // create a new HTTP request
-        var request = new HttpRequestMessage(HttpMethod.Delete, "construction/api/jobs/image")
-        {
-            // Add the content to the request
-            Content = new StringContent(JsonConvert.SerializeObject(image), Encoding.UTF8, "application/json")
-        };
+        var request = new HttpRequestMessage(HttpMethod.Delete, "construction/api/jobs/image/99999999");
 
         // send request
         var deletedImageResponse = await client.SendAsync(request);
@@ -150,11 +125,7 @@ public class DeleteImageForJobTests
         };
 
         // create a new HTTP request
-        var request = new HttpRequestMessage(HttpMethod.Delete, "construction/api/jobs/image")
-        {
-            // Add the content to the request
-            Content = new StringContent(JsonConvert.SerializeObject(image), Encoding.UTF8, "application/json")
-        };
+        var request = new HttpRequestMessage(HttpMethod.Delete, "construction/api/jobs/image/2");
 
         // send request
         var deletedImageResponse = await client.SendAsync(request);
@@ -183,11 +154,7 @@ public class DeleteImageForJobTests
         };
 
         // create a new HTTP request
-        var request = new HttpRequestMessage(HttpMethod.Delete, "construction/api/jobs/image")
-        {
-            // Add the content to the request
-            Content = new StringContent(JsonConvert.SerializeObject(image), Encoding.UTF8, "application/json")
-        };
+        var request = new HttpRequestMessage(HttpMethod.Delete, "construction/api/jobs/image/2");
 
         // send request
         var deletedImageResponse = await client.SendAsync(request);
