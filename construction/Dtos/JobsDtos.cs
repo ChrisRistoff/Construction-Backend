@@ -97,3 +97,11 @@ public class GetJobImageDto
     public int Job_Id { get; set; }
     public string? Image { get; set; }
 }
+
+
+
+public class DeleteImageDto
+{
+    public int Image_Id { get; set; }
+    public string? Image { get; set; }
+}

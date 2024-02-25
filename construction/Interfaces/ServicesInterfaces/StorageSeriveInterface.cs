@@ -8,5 +8,5 @@ interface IStorageService
     Task<string> UploadFileAsync(Stream fileStream, string fileName);
 
     // Delete file from storage
-    Task DeleteFileAsync(string fileLink);
+    Task DeleteFileAsync(string? fileLink);
 }

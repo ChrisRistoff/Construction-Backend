@@ -26,7 +26,7 @@ public class StorageService(IConfiguration configuration) : IStorageService
 
 
 
-    public async Task DeleteFileAsync(string fileLink)
+    public async Task DeleteFileAsync(string? fileLink)
     {
         // extract the path from the URL
         Uri fileUri = new Uri(fileLink);
