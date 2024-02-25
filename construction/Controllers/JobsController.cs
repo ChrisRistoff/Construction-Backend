@@ -154,4 +154,31 @@ public class JobsController(JobsRepository jobsRepository) : ControllerBase
             return BadRequest(e.Message);
         }
     }
+
+
+
+    [HttpDelete("construction/api/jobs/image/{imageId}")]
+    [Authorize]
+    public async Task<ActionResult> DeleteImageFromJob(int imageId)
+    {
+        try
+        {
+            // delete image from job
+            var deletedImage = await jobsRepository.DeleteImageFromJob(imageId);
+
+            // 404 if image not found
+            if (deletedImage == null)
+            {
+                return NotFound();
+            }
+
+            // return image
+            return NoContent();
+        }
+
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }

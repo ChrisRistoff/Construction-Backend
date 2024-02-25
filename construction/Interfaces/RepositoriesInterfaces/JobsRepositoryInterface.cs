@@ -21,4 +21,10 @@ public interface IJobsRepository
 
     // delete job
     Task<GetJobDto?> DeleteJob(int id);
+
+    // add image to job
+    Task<GetJobImageDto?> AddImageToJob(int id, IFormFile image);
+
+    // delete image from job
+    Task<GetJobImageDto?> DeleteImageFromJob(int imageId);
 }

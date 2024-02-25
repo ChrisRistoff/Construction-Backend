@@ -106,7 +106,7 @@ public class JobTypesRepository : IJobTypesRepository
         {
             if (jobType!.Image != null) await _storageService.DeleteFileAsync(jobType.Image);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             Console.WriteLine("Image not found in storage");
         }
