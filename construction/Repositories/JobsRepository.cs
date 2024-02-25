@@ -163,9 +163,18 @@ public class JobsRepository : IJobsRepository
         );
     }
 
-    public Task<GetJobImageDto?> DeleteImageFromJob(int imageId)
+    public async Task<GetJobImageDto?> DeleteImageFromJob(int imageId, string image)
     {
-        throw new NotImplementedException();
+        // create a connection
+        await using var connection = new NpgsqlConnection(_connectionString);
+
+        // delete image from storage
+        await _storageService.DeleteFileAsync(image);
+
+        // delete image from database
+        string deleteImageSql = "DELETE FROM jobs_images WHERE image_id = @ImageId RETURNING *";
+
+        return await connection.QueryFirstOrDefaultAsync<GetJobImageDto>(deleteImageSql, new { ImageId = imageId });
     }
 
 
