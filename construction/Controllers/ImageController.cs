@@ -8,7 +8,27 @@ namespace construction.Controllers;
 
 
 [ApiController]
-public class ImageController(JobsRepository jobsRepository) : ControllerBase
+public class ImageController(ImageRepository imageRepository) : ControllerBase
 {
 
+
+    [HttpPost("construction/api/image")]
+    [Authorize]
+    public async Task<ActionResult<string>> AddImage(IFormFile file)
+    {
+        try
+        {
+
+            // add image
+            var imageLink = await imageRepository.AddImage(file);
+
+            // return image link
+            return Ok(new { imageLink });
+        }
+
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 };
