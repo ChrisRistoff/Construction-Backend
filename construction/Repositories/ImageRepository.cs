@@ -7,7 +7,7 @@ using construction.Services;
 
 namespace construction.Repositories;
 
-public class ImageRepository
+public class ImageRepository : IImageRepository
 {
 
     private readonly string? _connectionString;
@@ -52,5 +52,10 @@ public class ImageRepository
 
         // return the file link
         return fileLink;
+    }
+
+    public Task DeleteImage(string imageLink)
+    {
+        throw new NotImplementedException();
     }
 }
