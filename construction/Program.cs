@@ -121,6 +121,7 @@ builder.Services.AddScoped<AdminRepository>();
 builder.Services.AddScoped<BusinessInfoRepository>();
 builder.Services.AddScoped<JobTypesRepository>();
 builder.Services.AddScoped<JobsRepository>();
+builder.Services.AddScoped<ImageRepository>();
 
 
 
