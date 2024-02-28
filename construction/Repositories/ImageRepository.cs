@@ -44,9 +44,6 @@ public class ImageRepository : IImageRepository
 
     public async Task<string?> AddImage(IFormFile file)
     {
-        // establish a connection
-        await using var connection = new NpgsqlConnection(_connectionString);
-
         // upload the file to firebase storage
         string? fileLink = await _storageService.UploadFileAsync(file.OpenReadStream(), file.FileName);
 
@@ -56,6 +53,7 @@ public class ImageRepository : IImageRepository
 
     public Task DeleteImage(string imageLink)
     {
-        throw new NotImplementedException();
+        // delete the image from firebase storage
+        return _storageService.DeleteFileAsync(imageLink);
     }
 }
