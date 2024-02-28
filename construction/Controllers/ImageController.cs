@@ -31,4 +31,26 @@ public class ImageController(ImageRepository imageRepository) : ControllerBase
             return BadRequest(e.Message);
         }
     }
+
+
+
+    [HttpDelete("construction/api/image")]
+    [Authorize]
+    public async Task<ActionResult> DeleteImage(string imageLink)
+    {
+        try
+        {
+
+            // delete image
+            await imageRepository.DeleteImage(imageLink);
+
+            // return no content
+            return NoContent();
+        }
+
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 };
