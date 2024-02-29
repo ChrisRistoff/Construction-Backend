@@ -8,7 +8,7 @@ public interface IJobTypesRepository
 {
 
     // get job types
-    Task<IEnumerable<GetJobTypeDto>?> GetJobTypes();
+    Task<IEnumerable<GetJobTypeDto>?> GetAllJobTypes();
 
     // get job type by name
     Task<GetJobTypeDto?> GetJobType(string name);
