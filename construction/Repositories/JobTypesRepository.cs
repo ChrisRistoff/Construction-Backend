@@ -42,14 +42,20 @@ public class JobTypesRepository : IJobTypesRepository
 
 
 
-    public async Task<IEnumerable<GetJobTypeDto>?> GetJobTypes()
+    public async Task<IEnumerable<GetJobTypeDto>?> GetAllJobTypes()
     {
 
         // create a connection
         using var connection = new NpgsqlConnection(_connectionString);
 
-        // get and return job types
-        return await connection.QueryAsync<GetJobTypeDto>("SELECT * FROM job_types");
+        // create sql string
+        StringBuilder sql = new StringBuilder("SELECT job_types.name, job_types.description, job_types.image, job_types.icon, COUNT(jobs.job_id) ");
+        sql.Append("FROM job_types ");
+        sql.Append("LEFT JOIN jobs ON job_types.name = jobs.job_type ");
+        sql.Append("GROUP BY job_types.name ");
+        sql.Append("ORDER BY job_types.name");
+
+        return await connection.QueryAsync<GetJobTypeDto>(sql.ToString());
     }
 
 

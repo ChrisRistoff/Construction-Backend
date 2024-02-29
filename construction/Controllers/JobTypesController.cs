@@ -20,7 +20,7 @@ public class JobTypesController(JobTypesRepository jobTypesRepository) : Control
         {
 
             // get job types
-            var jobTypes = await jobTypesRepository.GetJobTypes();
+            var jobTypes = await jobTypesRepository.GetAllJobTypes();
 
             // return job types
             return Ok(jobTypes);
