@@ -66,8 +66,14 @@ public class JobTypesRepository : IJobTypesRepository
         // create a connection
         using var connection = new NpgsqlConnection(_connectionString);
 
-        // get and return job type
-        return await connection.QueryFirstOrDefaultAsync<GetJobTypeDto>("SELECT * FROM job_types WHERE name = @Name",new { Name = name });
+        // get job type with the count of jobs
+        StringBuilder sql = new StringBuilder("SELECT job_types.name, job_types.description, job_types.image, job_types.icon, COUNT(jobs.job_id) ");
+        sql.Append("FROM job_types ");
+        sql.Append("LEFT JOIN jobs ON job_types.name = jobs.job_type ");
+        sql.Append("WHERE job_types.name = @Name ");
+        sql.Append("GROUP BY job_types.name");
+
+        return await connection.QueryFirstOrDefaultAsync<GetJobTypeDto>(sql.ToString(), new { Name = name });
     }
 
 
