@@ -7,3 +7,6 @@ nohup.out
 
 */obj
 */bin
+
+extractSeedDb/.env
+extractSeedDb/node_modules
