@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Bricklaying",
+    "description": "We know a thing or two about bricks and mortar. From repairing a garden wall to developing a new housing estate, our bricklayers have the skills needed to get the job done.",
+    "image": "https://firebasestorage.googleapis.com/v0/b/portfolio-5140c.appspot.com/o/images%2Fbricks.png?alt=media&token=eaf20f26-9939-42e0-a7da-b125d5b544e5",
+    "icon": "Icon"
+  },
+  {
+    "name": "Bathroom Fittings",
+    "description": "Whether you would like a brand new bathroom, or are replacing one feature, we are able to help. Give us a call to arrange an initial consultation free of charge.",
+    "image": "https://firebasestorage.googleapis.com/v0/b/portfolio-5140c.appspot.com/o/images%2Fbathroom2.jpg?alt=media&token=b3e0c951-a011-4183-b226-accfa7bd60be",
+    "icon": "Icon"
+  },
+  {
+    "name": "Concrete",
+    "description": "We are able to supply concrete blocks built to your given specifications. Please provide us with details of your construction project and we will get back to you with a quote.",
+    "image": "https://firebasestorage.googleapis.com/v0/b/portfolio-5140c.appspot.com/o/images%2Fconcrete.jpg?alt=media&token=1158d441-fd73-42a5-bd1f-33b641455eb2",
+    "icon": "Icon"
+  },
+  {
+    "name": "Paving",
+    "description": "With years of experience behind us, no paving job is too much of a challenge. We have worked with local councils to regenerate several high streets in recent years.",
+    "image": "https://firebasestorage.googleapis.com/v0/b/portfolio-5140c.appspot.com/o/images%2Fpaving.jpg?alt=media&token=8b2ebe86-ac78-40f0-9164-81f1c141c0d0",
+    "icon": "Icon"
+  }
+]

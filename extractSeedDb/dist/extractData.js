@@ -25,6 +25,21 @@ const extractData = () => __awaiter(void 0, void 0, void 0, function* () {
     const businessInfo = JSON.stringify(businessInfoResult.rows, null, 2);
     yield promises_1.default.writeFile('data/businessInfo.json', businessInfo);
     console.log('Business info extracted');
+    // jobs images data
+    const jobsImagesResult = yield connection_1.pool.query('SELECT * FROM jobs_images');
+    const jobsImages = JSON.stringify(jobsImagesResult.rows, null, 2);
+    yield promises_1.default.writeFile('data/jobsImages.json', jobsImages);
+    console.log('Jobs images extracted');
+    // jobs data
+    const jobsResult = yield connection_1.pool.query('SELECT * FROM jobs');
+    const jobs = JSON.stringify(jobsResult.rows, null, 2);
+    yield promises_1.default.writeFile('data/jobs.json', jobs);
+    console.log('Jobs extracted');
+    // job types data
+    const jobTypesResult = yield connection_1.pool.query('SELECT * FROM job_types');
+    const jobTypes = JSON.stringify(jobTypesResult.rows, null, 2);
+    yield promises_1.default.writeFile('data/jobTypes.json', jobTypes);
+    console.log('Job types extracted');
     connection_1.pool.end();
     console.log('Connection closed');
     return;
