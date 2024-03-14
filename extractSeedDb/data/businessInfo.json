@@ -1,0 +1,17 @@
+[
+  {
+    "info_id": 1,
+    "name": "BuildBros Ltd",
+    "email": "contact@build.bros",
+    "phone": "+ 44 (0) 1234 567 890",
+    "address": "123 Brick Lane, Stony Bay",
+    "city": "Mortarbridge",
+    "info": "BuildBros Ltd delivers a wide range of construction services. We always aim to provide excellent customer service and complete each project to the highest standard.",
+    "logo": "test",
+    "facebook": "facebook/build.bros",
+    "instagram": "instagram/build.bros",
+    "youtube": "youtube/build.bros",
+    "tiktok": "tiktok/build.bros",
+    "linkedin": "linkedin/build.bros"
+  }
+]

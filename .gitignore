@@ -10,3 +10,4 @@ nohup.out
 
 extractSeedDb/.env
 extractSeedDb/node_modules
+extractSeedDb/data/adminData.json
