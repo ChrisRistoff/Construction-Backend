@@ -18,7 +18,6 @@ public class AdminController(AdminRepository adminRepository) : ControllerBase
     {
         try
         {
-
             // check if username and password are empty
             if (string.IsNullOrEmpty(loginAdmin.Name) || string.IsNullOrEmpty(loginAdmin.Password))
             {
